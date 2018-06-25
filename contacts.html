@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>Контакты</title>
+    <link rel="stylesheet" type="text/css" href="styles/style.css">
+</head>
+
+<body class="contacts">
+    <!-- Меню -->
+    <ul class="menu">
+        <li><a href="index.html">Главная</a></li>
+        <li><a href="catalog.html">Каталог товаров</a></li>
+        <li><a href="#">Контакты</a></li>
+    </ul>
+    <hr>
+    <h1>Контакты</h1>
+    <h3>Наш&nbsp;адрес</h3>
+    <p>г. Вологда, ул. Батюшкова, 3 А</p>
+    <p>С&nbsp;нами также можно связаться по&nbsp;телефону <a href="tel:+78172256232">+7 (8172) 25-62-32</a> или&nbsp;по&nbsp;электронной почте <code><a href="mailto:support@tutti-frutti.com"> support@tutti-frutti.com</a></code></p>
+    <a href="https://yandex.ru/maps/?um=constructor%3Adac1708cca2d9ed07a13594407e8483e02aa9e09e115330fe74c1474fd50aa66&amp;source=constructorStatic" target="_blank"><img src="https://api-maps.yandex.ru/services/constructor/1.0/static/?um=constructor%3Adac1708cca2d9ed07a13594407e8483e02aa9e09e115330fe74c1474fd50aa66&amp;width=400&amp;height=400&amp;lang=ru_RU" alt="" style="border: 0;" /></a>
+    <form action="#">
+        <br>
+        <fieldset>
+            <legend>Оставьте Ваши контактные данные, если хотите, чтобы мы&nbsp;связались с&nbsp;Вами для&nbsp;решения возникших вопросов</legend>
+            <label>Ваше имя:
+                <input type="text" size="60" placeholder="Введите свое имя"> </label>
+            <br>
+            <br>
+            <label>Ваш контактный номер телефона:
+                <input type="text" size="33" placeholder="+x(xxx)xxx-xx-xx"> </label>
+            <br>
+            <br>
+            <label>Адрес Вашей электронной почты:
+                <input type="text" size="33" placeholder="your@mail.ru"> </label>
+            <br>
+            <br> Выберите предпочтительный способ связи с Вами:
+            <br>
+            <label>
+                <input type="radio" name="connection" checked> По телефону </label>
+            <br>
+            <label>
+                <input type="radio" name="connection"> По электронной почте </label>
+            <br>
+            <p>Причина обращения:</p>
+                <select size="1">
+                    <option disabled>Выберите причину обращения</option>
+                    <option value="wrong_product">Доставлен неправильный товар</option>
+                    <option value="bad_product">Товар ненадлежащего качества</option>
+                    <option value="wrong_time">Товар не доставлен или доставлен в меньшем количестве</option>
+                    <option value="return_product">Возврат товара</option>
+                    <option value="money_accept">Оплата товара</option>
+                    <option value="other">Другой вопрос</option>
+                    <option selected value="answer">Отзыв</option>
+                </select>
+            <br>
+            <br>
+            <label>Текст обращения:
+                <br>
+                <textarea name="Текст обращения" cols="56" rows="10" placeholder="Ваше сообщение"></textarea>
+            </label>
+            <br>
+            <label> При необходимости Вы можете приложить фотографию:
+                <br>
+                <input type="file"> </label>
+                <br><br>
+                <label> <input type="checkbox" checked> Даю свое согласие на хранение и обработку моих персональных данных </label> <br>
+                <label> <input type="checkbox"> Хочу получать рассылку по электронной почте с персональными предложениями и акциями магазина </label>
+        </fieldset>
+        <br>
+        <input type="submit" value="Отправить данные в Тутти Фрутти">
+        <input type="reset" value="Удалить введенные данные"> </form>
+    <br>
+    <hr> <small>&copy;&nbsp;2018 Все права защищены</small> </body>
+
+</html>
