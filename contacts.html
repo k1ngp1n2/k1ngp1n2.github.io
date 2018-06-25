@@ -25,15 +25,15 @@
         <fieldset>
             <legend>Оставьте Ваши контактные данные, если хотите, чтобы мы&nbsp;связались с&nbsp;Вами для&nbsp;решения возникших вопросов</legend>
             <label>Ваше имя:
-                <input type="text" size="60" placeholder="Введите свое имя"> </label>
+                <input class="username" type="text" size="60" placeholder="Введите свое имя"> </label>
             <br>
             <br>
             <label>Ваш контактный номер телефона:
-                <input type="text" size="33" placeholder="+x(xxx)xxx-xx-xx"> </label>
+                <input class="phonenumber" type="text" size="33" placeholder="+x(xxx)xxx-xx-xx"> </label>
             <br>
             <br>
             <label>Адрес Вашей электронной почты:
-                <input type="text" size="33" placeholder="your@mail.ru"> </label>
+                <input class="email" type="text" size="33" placeholder="your@mail.ru"> </label>
             <br>
             <br> Выберите предпочтительный способ связи с Вами:
             <br>
@@ -44,7 +44,7 @@
                 <input type="radio" name="connection"> По электронной почте </label>
             <br>
             <p>Причина обращения:</p>
-                <select size="1">
+                <select class="request" size="1">
                     <option disabled>Выберите причину обращения</option>
                     <option value="wrong_product">Доставлен неправильный товар</option>
                     <option value="bad_product">Товар ненадлежащего качества</option>
@@ -58,7 +58,7 @@
             <br>
             <label>Текст обращения:
                 <br>
-                <textarea name="Текст обращения" cols="56" rows="10" placeholder="Ваше сообщение"></textarea>
+                <textarea class="problem" name="Текст обращения" cols="56" rows="10" placeholder="Ваше сообщение"></textarea>
             </label>
             <br>
             <label> При необходимости Вы можете приложить фотографию:
@@ -72,6 +72,6 @@
         <input type="submit" value="Отправить данные в Тутти Фрутти">
         <input type="reset" value="Удалить введенные данные"> </form>
     <br>
-    <hr> <small>&copy;&nbsp;2018 Все права защищены</small> </body>
+    <hr> <p class="footer">&copy;&nbsp;2018 Все права защищены</p> </body>
 
 </html>
