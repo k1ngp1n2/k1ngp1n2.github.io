@@ -8,12 +8,15 @@
 </head>
 
 <body class="contacts">
+    <div class="header">
+    <!-- Логотип -->
+    <div class="logo"><span>Т</span><span>У</span><span>Т</span><span>Т</span><span>И</span><span> </span><span>Ф</span><span>Р</span><span>У</span><span>Т</span><span>Т</span><span>И</span></div>
     <!-- Меню -->
     <ul class="menu">
         <li><a href="index.html">Главная</a></li>
         <li><a href="catalog.html">Каталог товаров</a></li>
-        <li><a href="#">Контакты</a></li>
-    </ul>
+        <li class="current_page"><a href="#">Контакты</a></li>
+    </ul> </div>
     <hr>
     <h1>Контакты</h1>
     <h3>Наш&nbsp;адрес</h3>
@@ -24,26 +27,22 @@
         <br>
         <fieldset>
             <legend>Оставьте Ваши контактные данные, если хотите, чтобы мы&nbsp;связались с&nbsp;Вами для&nbsp;решения возникших вопросов</legend>
-            <label>Ваше имя:
-                <input class="username" type="text" size="60" placeholder="Введите свое имя"> </label>
+            <label>Ваше имя: <br>
+                <input class="username" type="text" placeholder="Введите свое имя"> </label>
             <br>
+            <label>Ваш контактный номер телефона: <br>
+                <input class="phonenumber" type="text" placeholder="+x(xxx)xxx-xx-xx"> </label>
             <br>
-            <label>Ваш контактный номер телефона:
-                <input class="phonenumber" type="text" size="33" placeholder="+x(xxx)xxx-xx-xx"> </label>
-            <br>
-            <br>
-            <label>Адрес Вашей электронной почты:
-                <input class="email" type="text" size="33" placeholder="your@mail.ru"> </label>
-            <br>
-            <br> Выберите предпочтительный способ связи с Вами:
+            <label>Адрес Вашей электронной почты: <br>
+                <input class="email" type="text" placeholder="your@mail.ru"> </label>
+            <br>Выберите предпочтительный способ связи с Вами:
             <br>
             <label>
                 <input type="radio" name="connection" checked> По телефону </label>
             <br>
             <label>
                 <input type="radio" name="connection"> По электронной почте </label>
-            <br>
-            <p>Причина обращения:</p>
+                        <p>Причина обращения:</p>
                 <select class="request" size="1">
                     <option disabled>Выберите причину обращения</option>
                     <option value="wrong_product">Доставлен неправильный товар</option>
@@ -54,11 +53,11 @@
                     <option value="other">Другой вопрос</option>
                     <option selected value="answer">Отзыв</option>
                 </select>
-            <br>
+            
             <br>
             <label>Текст обращения:
                 <br>
-                <textarea class="problem" name="Текст обращения" cols="56" rows="10" placeholder="Ваше сообщение"></textarea>
+                <textarea class="problem" name="Текст обращения" rows="10" placeholder="Ваше сообщение"></textarea>
             </label>
             <br>
             <label> При необходимости Вы можете приложить фотографию:
@@ -72,6 +71,6 @@
         <input type="submit" value="Отправить данные в Тутти Фрутти">
         <input type="reset" value="Удалить введенные данные"> </form>
     <br>
-    <hr> <p class="footer">&copy;&nbsp;2018 Все права защищены</p> </body>
+    <hr> <div class="footer">&copy;&nbsp;2018 Все права защищены</div> </body>
 
 </html>

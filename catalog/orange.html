@@ -7,17 +7,55 @@
     <link rel="stylesheet" type="text/css" href="../styles/style.css"> </head>
 
 <body class="product">
+    <div class="header">
+    <!-- Логотип -->
+    <div class="logo"><span>Т</span><span>У</span><span>Т</span><span>Т</span><span>И</span><span> </span><span>Ф</span><span>Р</span><span>У</span><span>Т</span><span>Т</span><span>И</span></div>
+    <!-- Меню -->
     <ul class="menu">
         <li><a href="../index.html">Главная</a></li>
         <li><a href="../catalog.html">Каталог товаров</a></li>
         <li><a href="../contacts.html">Контакты</a></li>
-    </ul>
+    </ul></div>
     <hr>
     <h1>Апельсин</h1>
     <a href="../img/Oranges_w400px.jpg" target="_blank"><img src="../img/Oranges_w100px.jpg" alt="Апельсин" title="Нажмите, чтобы увеличить изображение" width="100" height="67"></a>
     <h3>Описание товара</h3>
     <p class="small_description">Цитрусовый фрукт, полученный путём скрещивания мандарина и помело</p>
     <h3>Характеристики товара</h3>
+    <table class="info">
+        <tr>
+            <th>Сорт яблок</th>
+            <th>Страна</th>
+            <th>Цена, руб.</th>
+            <th>Дата урожая</th>
+            <th>Остаток на складе</th>
+        </tr>
+        <tr>
+            <td>Гамлин</td>
+            <td>Бразилия</td>
+            <td>49-00</td>
+            <td>Май 2018</td>
+            <td>Мало</td>
+        </tr>
+        <tr>
+            <td>Кара-кара</td>
+            <td>США</td>
+            <td>99-00</td>
+            <td>Июнь 2018</td>
+            <td>Много</td>
+        </tr>
+        <tr>
+            <td>Навел</td>
+            <td rowspan="2">Китай</td> <!-- Объединяем ячейки во вертикали -->
+            <td>39-00</td>
+            <td>Май 2018</td>
+            <td>Средне</td>
+        </tr>
+        <tr>
+            <td>Королек</td>            
+            <td colspan="3">Товар временно отсутствует</td>    <!-- Объединяем ячейки во горизонтали -->        
+        </tr>
+    </table>
     <p>В 100 г апельсинов содержатся:</p>
     <ul class="characteristics">
         <li>Жиры 0,2 г</li>
@@ -51,6 +89,6 @@
         <br> Яркий свет и&nbsp;солнечные лучи способны существенно сократить сроки, при которых цитрус останется свежим и&nbsp;привлекательным.
         <br> Для хранения лучше не&nbsp;использовать пластик в&nbsp;виде пакетов или контейнеров, а&nbsp;остановить свой выбор на&nbsp;картонной или бумажной ёмкости. </p>
     <br>
-    <hr> <p class="footer">&copy;&nbsp;2018 Все права защищены</p> </body>
+    <hr> <div class="footer">&copy;&nbsp;2018 Все права защищены</div> </body>
 
 </html>
