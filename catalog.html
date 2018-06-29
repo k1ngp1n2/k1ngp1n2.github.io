@@ -4,38 +4,38 @@
 <head>
     <meta charset="UTF-8">
     <title>Каталог товаров</title>
-    <link rel="stylesheet" type="text/css" href="styles/style.css">
-</head>
+    <link rel="stylesheet" type="text/css" href="styles/style.css"> </head>
 
 <body class="catalog">
-    <div class="header">
-    <!-- Логотип -->
-    <div class="logo"><span>Т</span><span>У</span><span>Т</span><span>Т</span><span>И</span><span> </span><span>Ф</span><span>Р</span><span>У</span><span>Т</span><span>Т</span><span>И</span></div>
-    <!-- Меню -->
-    <ul class="menu">
-        <li><a href="index.html">Главная</a></li>
-        <li class="current_page"><a href="#">Каталог товаров</a></li>
-        <li><a href="contacts.html">Контакты</a></li>
-    </ul> </div>
-    <hr>
-    <h1>Каталог товаров</h1>
-    <p> Выберите интересующий Вас товар: </p>
-    <ol class="product_list">
-        <li>
-            <a href="catalog/apple.html"> <img src="img/Apple_green_w100px.jpg" alt="Яблоко" title="Нажмите, чтобы перейти к описанию товара" width="100" height="67">
-                <br>Яблоко</a>
-        </li>
-        <br>
-        <li>
-            <a href="catalog/banana.html"> <img src="img/Banana_yellow_w100px.jpg" alt="Банан" title="Нажмите, чтобы перейти к описанию товара" width="100" height="67">
-                <br> Банан</a>
-        </li>
-        <br>
-        <li>
-            <a href="catalog/orange.html"> <img src="img/Oranges_w100px.jpg" alt="Апельсин" title="Нажмите, чтобы перейти к описанию товара" width="100" height="67">
-                <br> Апельсин</a>
-        </li>
-    </ol>
-    <hr> <div class="footer">&copy;&nbsp;2018 Все права защищены</div> </body>
+    <div class="container">
+        <div class="header">
+            <!-- Логотип -->
+            <div class="logo"><span>Т</span><span>У</span><span>Т</span><span>Т</span><span>И</span><span> </span><span>Ф</span><span>Р</span><span>У</span><span>Т</span><span>Т</span><span>И</span></div>
+            <!-- Меню -->
+            <ul class="menu">
+                <li><a href="index.html">Главная</a></li>
+                <li class="current_page"><a href="#">Каталог</a></li>
+                <li><a href="contacts.html">Контакты</a></li>
+            </ul>
+        </div>
+        <div class="content">
+            <hr>
+            <h1>Каталог товаров</h1>
+            <p> Выберите интересующий Вас товар: </p>
+            <ul class="product_list">
+                <li>
+                    <div>Яблоко<img src="img/Apple_green_w100px.jpg" alt="Яблоко" title="Яблоко" width="100" height="67"><a href="catalog/apple.html">Выбрать</a></div>
+                </li>
+                <li>
+                    <div>Банан<img src="img/Banana_yellow_w100px.jpg" alt="Банан" title="Банан" width="100" height="67"><a href="catalog/banana.html">Выбрать</a></div>
+                </li>
+                <li>
+                    <div>Апельсин<img src="img/Oranges_w100px.jpg" alt="Апельсин" title="Апельсин" width="100" height="67"><a href="catalog/orange.html">Выбрать</a></div>
+                </li>
+            </ul>
+            <hr> </div>
+        <div class="footer">&copy;&nbsp;2018 Все права защищены</div>
+    </div>
+</body>
 
 </html>
