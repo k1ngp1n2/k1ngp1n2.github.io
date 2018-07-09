@@ -52,6 +52,7 @@ body {
   /* Создаем flexbox из menu */
   justify-content: space-between;
   /* Прижимаем крайние элементы к границам */
+  float: left;
   height: 10px;
   width: 504px;
   padding-left: 0px;
