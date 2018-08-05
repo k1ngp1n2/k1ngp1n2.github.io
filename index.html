@@ -1,239 +1,594 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
-    <link rel="stylesheet" type="text/css" href="css/style.css">
-    <!--[if lt IE 9]>
-        <script src="js/html5shiv.min.js"></script>
-        <script src="js/css3-mediaqueries.js"></script>      
-    <![endif]-->
-    <title>Interior Home Page</title>
-</head>
-
-<body>
-    <div class="page">
-        <div class="header_index">
-            <div class="navbar">
-                <a href="#"> <img class="logo" src="img/logo.png" alt="logo"> </a>
-                <div class="menu_with_search">
-                    <ul class="menu">
-                        <li><a class="current_page" href="#">&nbsp;HOME&nbsp;&nbsp;&nbsp;</a></li>
-                        <li><a href="catalog/product.html">PRODUCTS&nbsp;&nbsp;</a></li>
-                        <li><a href="#">&nbsp;&nbsp;HISTORY&nbsp;&nbsp;</a></li>
-                        <li><a href="#">&nbsp;&nbsp;SHOWROOM&nbsp;&nbsp;</a></li>
-                        <li><a href="contacts.html">&nbsp;&nbsp;CONTACT&nbsp;&nbsp;</a></li>
-                    </ul>
-                    <a class="search" href="#"><img src="img/search.png" alt="search"></a>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport"
+		      content="width=device-width, user-scalable=no, initial-scale=1, maximum-scale=1, shrink-to-fit=no">
+		<link rel="preload" href="fonts/montserrat-extralight.woff" as="font" type="font/woff">
+		<link rel="preload" href="fonts/montserrat-light.woff" as="font" type="font/woff">
+		<link rel="preload" href="fonts/montserrat-regular.woff" as="font" type="font/woff">
+		<link rel="preload" href="fonts/raleway-bold.woff" as="font" type="font/woff">
+		<link rel="preload" href="fonts/raleway-extrabold.woff" as="font" type="font/woff">
+		<link rel="preload" href="fonts/raleway-medium.woff" as="font" type="font/woff">
+		<link rel="preload" href="fonts/raleway-regular.woff" as="font" type="font/woff">
+		<link rel="preload" href="fonts/roboto-regular.woff" as="font" type="font/woff">
+		<link rel="preload" href="fonts/waxom.woff" as="font" type="font/woff">
+		<link rel="stylesheet" href="css/bootstrap.min.css">
+		<link rel="stylesheet" href="css/skin.css">
+		<link rel="stylesheet" href="css/owl.carousel.min.css">
+        <link rel="stylesheet" href="css/owl.theme.default.min.css">
+		<link rel="stylesheet" href="css/style.css">
+		<title>Waxom</title>
+	</head>
+	<body>
+      <div class="container-fluid px-0">
+        <header>
+          <nav class="navbar fixed-top navbar-expand-lg py-lg-4" id="menu">
+           <div class="container">
+            <a class="navbar-brand" href="#">
+              <img src="img/logos.png" width="64" height="56" class="d-inline-block align-top" alt="logotype">Waxom
+            </a>
+            <button class="navbar-toggler navbar-dark" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+              <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ml-auto">
+                  <li class="nav-item active">                    
+                    <a class="nav-link" href="#">Home<span class="sr-only">(current)</span></a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" href="#">About&nbsp;Us</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" href="#">Portfolio</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" href="#">Features</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" href="#">Blog</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" href="#">Pricing</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" href="#">Shortcodes</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" href="#">Contact</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link ml-lg-4" href="#"><i class="icon-cart"></i></a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" href="#"><i class="icon-search"></i></a>
+                  </li>
+                </ul>
+            </div>            
+           </div>
+          </nav>                  
+        </header>
+        <main>
+          <section id="slider" class="carousel slide" data-ride="carousel" data-interval="4000">
+            <ol class="carousel-indicators">
+              <li data-target="#slider" data-slide-to="0" class="active"></li>
+              <li data-target="#slider" data-slide-to="1"></li>
+              <li data-target="#slider" data-slide-to="2"></li>
+              <li data-target="#slider" data-slide-to="3"></li>
+              <li data-target="#slider" data-slide-to="4"></li>
+            </ol>
+          <div class="carousel-inner">
+            <div class="carousel-item active">
+                <img class="d-block w-100" src="img/slider.jpg" alt="First slide" srcset="img/slider@2x.jpg 2x, img/slider@1,5x.jpg 1.5x, img/slider@1,25x.jpg 1.25x">
+                <div class="carousel-caption d-block d-md-block">
+                  <h2>Unique and Modern Design</h2>
+                  <h1>Portfolio PSD Template</h1>
+                  <div class="row">
+                      <div class="col"></div>
+                      <div class="col-xl-6">
+                          <p class="d-block">Nam liber tempor cum soluta nobis eleifend option congue nihil imperdiet doming id quod mazim placerat facer possim assum.</p>                          
+                      </div>
+                      <div class="col"></div>
+                  </div>                  
+                  <a href="#" class="text-center text-uppercase go_to_another_page">Get started</a>
                 </div>
             </div>
-            <div class="slider_content">
-                <h3>TRENDING</h3>
-                <h1>Fishnet Chair</h1>
-                <p>Seat and back with upholstery made of cold cure foam. Steel frame, available in matt powder-coated black</p> <a href="catalog/details.html">Order Us</a> </div>
-            <ul class="navigation">
-                <li>
-                    <a href="#"></a>
-                </li>
-                <li class="opened">
-                    <a href="#"></a>
-                </li>
-                <li>
-                    <a href="#"></a>
-                </li>
-            </ul>
-        </div>
-        <div class="content">
-            <div class="future_product">
-                <div class="tab_control"> <span class="selected"><a href="#">&nbsp;Featured&nbsp;</a></span> <span><a href="#">&nbsp;New&nbsp;</a></span> </div>
-                <div class="btn_ghost"> <a href="catalog/product.html">explore all</a> </div>
-                <ul class="tab_content">
-                    <li>
-                        <a class="product_content_hover" href="catalog/details.html">
-                            <div class="product_1"></div>
-                            <div class="back_1"></div>
-                            <h4 class="name">Fishnet Chair</h4>
-                            <p class="details">Seat and back with upholstery made of cold cure foam</p>
-                        </a>
-                    </li>
-                    <li>
-                        <a class="product_content_hover" href="catalog/details.html">
-                            <div class="product_2"></div>
-                            <div class="back_2"></div>
-                            <h4 class="name">Fishnet Chair</h4>
-                            <p class="details">Seat and back with upholstery made of cold cure foam</p>
-                        </a>
-                    </li>
-                    <li>
-                        <a class="product_content_hover" href="catalog/details.html">
-                            <div class="product_3"></div>
-                            <div class="back_3"></div>
-                            <h4 class="name">Fishnet Chair</h4>
-                            <p class="details">Seat and back with upholstery made of cold cure foam</p>
-                        </a>
-                    </li>
-                    <li>
-                        <a class="product_content_hover" href="catalog/details.html">
-                            <div class="product_4"></div>
-                            <div class="back_4"></div>
-                            <h4 class="name">Fishnet Chair</h4>
-                            <p class="details">Seat and back with upholstery made of cold cure foam</p>
-                        </a>
-                    </li>
-                </ul>
-            </div>
-            <div class="promo_product">
-                <ul>
-                    <li class="promo_content1">
-                        <h3>exclusive</h3>
-                        <h1>Fishnet Chair</h1>
-                        <p>Seat and back with upholstery made of cold cure foam. Steel frame, available in matt</p> <a href="catalog/details.html">Order Us</a> </li>
-                    <li class="promo_content2">
-                        <h3>exclusive</h3>
-                        <h1>Fishnet Chair</h1>
-                        <p>Seat and back with upholstery made of cold cure foam. Steel frame, available in matt</p> <a href="catalog/details.html">Order Us</a> </li>
-                </ul>
-            </div>
-            <div class="trending_products">
-                <div class="title">
-                    <h1>Trending Products</h1>
-                    <div class="btn_ghost"> <a href="catalog/product.html">explore all</a> </div>
-                </div>
-                <ul class="products">
-                    <li>
-                        <a href="catalog/details.html"><img src="img/product-11.jpg" alt="product-11"></a>
-                    </li>
-                    <li>
-                        <a href="catalog/details.html"><img src="img/product-21.jpg" alt="product-21"></a>
-                    </li>
-                    <li>
-                        <a href="catalog/details.html"><img src="img/product-31.jpg" alt="product-31"></a>
-                    </li>
-                    <li>
-                        <a href="catalog/details.html"><img src="img/product-41.jpg" alt="product-41"></a>
-                    </li>
-                    <li>
-                        <a href="catalog/details.html"><img src="img/product-5.jpg" alt=""></a>
-                    </li>
-                    <li>
-                        <a href="catalog/details.html"><img src="img/product-6.jpg" alt=""></a>
-                    </li>
-                </ul>
-            </div>
-            <div class="hot_deals">
-                <div class="slider_content">
-                    <h3>Hot deal</h3>
-                    <h1>Fishnet Chair</h1>
-                    <p>Seat and back with upholstery made of cold cure foam. Steel frame, available in matt powder-coated black</p> <a href="catalog/details.html">Order Us</a> </div>
-                <ul class="navigation">
-                    <li>
-                        <a href="#"></a>
-                    </li>
-                    <li class="opened">
-                        <a href="#"></a>
-                    </li>
-                    <li>
-                        <a href="#"></a>
-                    </li>
-                </ul>
-            </div>
-            <div class="exclusive_product">
-                <div class="slider_content">
-                    <h3>exclusive</h3>
-                    <h1>Fishnet Chair</h1>
-                    <p>Seat and back with upholstery made of cold cure foam. Steel frame, available in matt powder&#8209;coated black</p> <a href="catalog/details.html">Order Us</a> </div>
-                <ul class="tab_content_2">
-                    <li>
-                        <a href="catalog/details.html"><img src="img/product-2-sm.jpg" alt=""></a>
-                    </li>
-                    <li>
-                        <a href="catalog/details.html"><img src="img/product-3-sm.jpg" alt=""></a>
-                    </li>
-                    <li>
-                        <a href="catalog/details.html"><img src="img/product-4-sm.jpg" alt=""></a>
-                    </li>
-                    <li>
-                        <a href="catalog/details.html"><img src="img/product-5-sm.jpg" alt=""></a>
-                    </li>
-                </ul>
-            </div>
-            <div class="mobile_up">
-                <div class="mobile_content">
-                    <h3>mobile app</h3>
-                    <h1>Find. Follow. Favorite.</h1>
-                    <p>Save your favorites and share your style.</p>
-                    <ul class="mobile_links">
-                        <li>
-                            <a href="https://apple.store"><img src="img/app-store.png" alt=""></a>
-                        </li>
-                        <li>
-                            <a href="https://play.google.com"><img src="img/google-play.png" alt=""></a>
-                        </li>
-                    </ul>
+            <div class="carousel-item">
+                <img class="d-block w-100" src="img/slider.jpg" alt="Second slide" srcset="img/slider@2x.jpg 2x, img/slider@1,5x.jpg 1.5x, img/slider@1,25x.jpg 1.25x">
+                <div class="carousel-caption d-block d-md-block">
+                  <h2>Unique and Modern Design</h2>
+                  <h1>Portfolio PSD Template</h1>
+                  <div class="row">
+                      <div class="col"></div>
+                      <div class="col-xl-6">
+                          <p class="d-block">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Officia dolorum, quae eos cupiditate. Non quas libero cumque, commodi enim quasi, adipisci voluptatem nobis laborum. Consequatur fugit, libero nulla repellendus autem.</p>                          
+                      </div>
+                      <div class="col"></div>
+                  </div>                  
+                  <a href="#" class="text-center text-uppercase go_to_another_page">Get started</a>
                 </div>
             </div>
-        </div>
-        <div class="clr"></div>
-    </div>
-    <div class="footer">
-        <div class="f1">
-            <h3>Contact Us</h3>
-            <p>132A Bridge Road Richmond VIC Australia.</p>
-            <p>Talk to us on <a href="tel:+1300132">1300 132</a> <a href="mailto:info@interior.com">info@interior.com</a></p>
-        </div>
-        <div class="f2">
-            <h3>Useful Information</h3>
-            <ul>
-                <li><a href="#">Sales terms</a></li>
-                <li><a href="#">Customer care</a></li>
-                <li><a href="#">Delivery</a></li>
-            </ul>
-            <ul>
-                <li><a href="#">Architect accounts</a></li>
-                <li><a href="#">Careers</a></li>
-                <li><a href="#">Exchanges &amp;&nbsp;returns</a></li>
-            </ul>
-        </div>
-        <div class="f3">
-            <h3>Let’s Stay in Touch!</h3>
-            <form action="#">
-                <p>Suscribe to know about our latest news, products and special offers just for suscribers.</p>
-                            <input class="email" type="text" placeholder="your email address">
-                            <input class="send_mail" type="submit" value="">
-            </form>
-        </div>
-        <div class="lastrow">
-            <div class="copyright">&copy;&nbsp;Copyright&nbsp;- INTERIOR 2016. All Rights Reserved.</div>
-            <ul class="social_links">
-                <li>
-                    <a href="#"><img src="img/facebook.png" alt="facebook"></a>
-                </li>
-                <li>
-                    <a href="#"><img src="img/Twitter.png" alt="twitter"></a>
-                </li>
-                <li>
-                    <a href="#"><img src="img/Google.png" alt="google"></a>
-                </li>
-                <li>
-                    <a href="#"><img src="img/pin.png" alt="Pinterest"></a>
-                </li>
-            </ul>
-            <ul class="terms">
-                <li><a href="#">Terms &amp;&nbsp;Conditions</a></li>
-                <li>
-                    <p>&nbsp;/&nbsp;</p>
-                </li>
-                <li><a href="#">Privacy policy &amp;&nbsp;Cookies</a></li>
-            </ul>
-        </div>
-    </div>
-
-
-    <script src="js/jquery-3.3.1.slim.min.js"></script>
+            <div class="carousel-item">
+                <img class="d-block w-100" src="img/slider.jpg" alt="Third slide" srcset="img/slider@2x.jpg 2x, img/slider@1,5x.jpg 1.5x, img/slider@1,25x.jpg 1.25x">
+                <div class="carousel-caption d-block d-md-block">
+                  <h2>Unique and Modern Design</h2>
+                  <h1>Portfolio PSD Template</h1>
+                  <div class="row">
+                      <div class="col"></div>
+                      <div class="col-xl-6">
+                          <p class="d-block">Nam liber tempor cum soluta nobis eleifend option congue nihil imperdiet doming id quod mazim placerat facer possim assum.</p>                          
+                      </div>
+                      <div class="col"></div>
+                  </div>                  
+                  <a href="#" class="text-center text-uppercase go_to_another_page">Get started</a>
+                </div>
+            </div>
+            <div class="carousel-item">
+                <img class="d-block w-100" src="img/slider.jpg" alt="Fourth slide" srcset="img/slider@2x.jpg 2x, img/slider@1,5x.jpg 1.5x, img/slider@1,25x.jpg 1.25x">
+                <div class="carousel-caption d-block d-md-block">
+                  <h2>Unique and Modern Design</h2>
+                  <h1>Portfolio PSD Template</h1>
+                  <div class="row">
+                      <div class="col"></div>
+                      <div class="col-xl-6">
+                          <p class="d-block">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Commodi cum necessitatibus, dicta, minima labore exercitationem nemo quis, deserunt voluptatum quo excepturi accusamus? Voluptas ut reprehenderit accusamus minima, obcaecati dignissimos numquam.</p>                          
+                      </div>
+                      <div class="col"></div>
+                  </div>                  
+                  <a href="#" class="text-center text-uppercase go_to_another_page">Get started</a>
+                </div>
+            </div>
+            <div class="carousel-item">
+                <img class="d-block w-100" src="img/slider.jpg" alt="Fifth slide" srcset="img/slider@2x.jpg 2x, img/slider@1,5x.jpg 1.5x, img/slider@1,25x.jpg 1.25x">
+                <div class="carousel-caption d-block d-md-block">
+                  <h2>Unique and Modern Design</h2>
+                  <h1>Portfolio PSD Template</h1>
+                  <div class="row">
+                      <div class="col"></div>
+                      <div class="col-xl-6">
+                          <p class="d-block">Nam liber tempor cum soluta nobis eleifend option congue nihil imperdiet doming id quod mazim placerat facer possim assum.</p>                          
+                      </div>
+                      <div class="col"></div>
+                  </div>                  
+                  <a href="#" class="text-center text-uppercase go_to_another_page">Get started</a>
+                </div>
+            </div>
+          </div>
+            <a class="carousel-control-prev" href="#slider" role="button" data-slide="prev">
+              <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+              <span class="sr-only">Previous</span>
+            </a>
+            <a class="carousel-control-next" href="#slider" role="button" data-slide="next">
+              <span class="carousel-control-next-icon" aria-hidden="true"></span>
+              <span class="sr-only">Next</span>
+            </a>
+          </section>
+          <section class="services container pt-md-5">
+              <div class="row text-center">
+                  <div class="col-xl-3 col-md-6 pb-5">
+                      <a class="d-inline-block" href="#">
+                          <i class="icon-pen d-block pb-4"></i>
+                          <h3 class="pb-3">Web &amp;&nbsp;App Design</h3>
+                          <p class="d-block">Nam liber tempor cum soluta nobis eleifend option congue nihil imperdiet doming id quod mazim.</p>
+                          <div class="line_under_block d-inline-block"></div>
+                      </a>
+                  </div>
+                  <div class="col-xl-3 col-md-6 pb-5">
+                      <a class="d-inline-block" href="#">
+                          <i class="icon-pack d-block pb-4"></i>
+                          <h3 class="pb-3">Development</h3>
+                          <p class="d-block">Nam liber tempor cum soluta nobis eleifend option congue nihil imperdiet doming id quod mazim.</p>
+                          <div class="line_under_block d-inline-block"></div>
+                      </a>
+                  </div>
+                  <div class="col-xl-3 col-md-6 pb-5">
+                      <a class="d-inline-block" href="#">
+                          <i class="icon-mech d-block pb-4"></i>
+                          <h3 class="pb-3">Customization</h3>
+                          <p class="d-block">Nam liber tempor cum soluta nobis eleifend option congue nihil imperdiet doming id quod mazim.</p>
+                          <div class="line_under_block d-inline-block"></div>
+                      </a>
+                  </div>
+                  <div class="col-xl-3 col-md-6 pb-5">
+                      <a class="d-inline-block" href="#">
+                          <i class="icon-bag d-block pb-4"></i>
+                          <h3 class="pb-3">Marketing</h3>
+                          <p class="d-block">Nam liber tempor cum soluta nobis eleifend option congue nihil imperdiet doming id quod mazim.</p>
+                          <div class="line_under_block d-inline-block"></div>
+                      </a>
+                  </div>
+              </div>
+          </section>
+          <section class="realization container-fluid px-0 text-center">
+            <div class="container">
+              <div class="row pb-2">
+                 <div class="col"></div>
+                 <div class="col-lg-8 col-md-9"><h4>Waxom is Realization of your Ideas.</h4></div>
+                 <div class="col"></div>
+              </div>
+              <div class="row pb-4">
+                 <div class="col"></div>
+                 <div class="col-xl-8 col-lg-9 col-md-11"><p class="description_text">Investigationes demonstraverunt lectores legere me lius quod ii legunt saepius. Claritas est etiam processus dynamicus, qui sequitur mutationem consuetudium.</p></div>
+                 <div class="col"></div>
+              </div>
+              <img class="img-fluid" src="img/browser-center.png" alt="Screenshots">
+            </div>
+            <div class="text_boxes">
+            <div class="container">
+                  <div class="row justify-content-between align-items-center">
+                      <div class="col-xl-6 col-lg-8 col-md-10 align-items-center px-0 purchase">
+                          <h4><span>Waxom</span> Multipurpose WordPress Theme</h4>
+                          <p>Don't Forget to Rate the Template. Thanks so much!</p>
+                      </div>
+                      <div class="col-xl-2 col-lg-3 px-0 pb-5">
+                          <a href="#" class="text-center text-uppercase go_to_another_page">Purchase&nbsp;Now</a>
+                      </div>
+                  </div>
+                </div>
+              </div>
+          </section>
+          <section class="our_latest_projects container text-center">
+             <div class="row pb-2">
+                  <div class="col"></div>
+                  <div class="col-xl-8 col-md-9">
+                      <h4>Our Latest Projects.</h4>
+                  </div>
+                  <div class="col"></div>
+              </div>
+              <div class="row pb-4">
+                  <div class="col"></div>
+                  <div class="col-xl-8 col-lg-9 col-md-11">
+                      <p class="description_text">Investigationes demonstraverunt lectores legere me lius quod ii legunt saepius. Claritas est etiam processus dynamicus, qui sequitur mutationem consuetudium.</p>
+                  </div>
+                  <div class="col"></div>
+              </div>
+              <div class="row pb-4">
+                  <div class="col">
+                      <button type="button" class="btn tag_filter active">All</button>
+                      <button type="button" class="btn tag_filter">Web Design</button>
+                      <button type="button" class="btn tag_filter">Mobile App</button>
+                      <button type="button" class="btn tag_filter">Illustration</button>
+                      <button type="button" class="btn tag_filter">Photography</button>
+                 </div>
+              </div>
+              <div class="card-columns">
+                <div data-key="Photography" class="card mb-4">
+                    <img class="card-img-top" src="img/1.jpg" alt="Phone">
+                    <div class="card-img-overlay">
+                        <a href="#"><i class="icon-link"></i></a>
+                        <a href="#"><i class="icon-lupa"></i></a>
+                    </div>
+                    <div class="card-body">
+                        <h5 class="card-title">Claritas Etiam Processus</h5>
+                        <p class="card-text">Photography, Nature</p>
+                    </div>
+                </div>
+                <div data-key="Photography" class="card mb-4">
+                    <img class="card-img-top" src="img/4.jpg" alt="Waterfall">
+                    <div class="card-img-overlay">
+                        <a href="#"><i class="icon-link"></i></a>
+                        <a href="#"><i class="icon-lupa"></i></a>
+                    </div>
+                    <div class="card-body">
+                        <h5 class="card-title">Claritas Etiam Processus</h5>
+                        <p class="card-text">Photography, Nature</p>
+                    </div>
+                </div>
+                <div data-key="Web Design" class="card mb-4">
+                    <img class="card-img-top" src="img/2.jpg" alt="Sea">
+                    <div class="card-img-overlay">
+                        <a href="#"><i class="icon-link"></i></a>
+                        <a href="#"><i class="icon-lupa"></i></a>
+                    </div>
+                    <div class="card-body">
+                        <h5 class="card-title">Quam Nutamus Farum</h5>
+                        <p class="card-text">Graphic Design, Mock-Up</p>
+                    </div>
+                </div>                
+                <div data-key="Web Design" class="card mb-4">
+                    <img class="card-img-top" src="img/5.jpg" alt="Magazin">
+                    <div class="card-img-overlay">
+                        <a href="#"><i class="icon-link"></i></a>
+                        <a href="#"><i class="icon-lupa"></i></a>
+                    </div>
+                    <div class="card-body">
+                        <h5 class="card-title">Quam Nutamus Farum</h5>
+                        <p class="card-text">Graphic Design, Mock-Up</p>
+                    </div>
+                </div>
+                <div data-key="Photography" class="card mb-4">
+                    <img class="card-img-top" src="img/3.jpg" alt="Book">
+                    <div class="card-img-overlay">
+                        <a href="#"><i class="icon-link"></i></a>
+                        <a href="#"><i class="icon-lupa"></i></a>
+                    </div>
+                    <div class="card-body">
+                        <h5 class="card-title">Usus Legentis Videntur</h5>
+                        <p class="card-text">Photography, Holiday</p>
+                    </div>
+                </div>
+                <div data-key="Photography" class="card mb-4">
+                    <img class="card-img-top" src="img/6.jpg" alt="Island">
+                    <div class="card-img-overlay">
+                        <a href="#"><i class="icon-link"></i></a>
+                        <a href="#"><i class="icon-lupa"></i></a>
+                    </div>
+                    <div class="card-body">
+                        <h5 class="card-title">Usus Legentis Videntur</h5>
+                        <p class="card-text">Photography, Holiday</p>
+                    </div>
+                </div>
+            </div>
+            <div class="row py-4">
+               <div class="col"></div>
+               <div class="col-xl-2 col-lg-3">
+                   <a href="#" class="text-uppercase go_to_another_page">Load&nbsp;more</a>
+               </div>
+               <div class="col"></div>
+            </div>
+          </section>
+          <section class="player is-splash fp-mute mt-5" id="checkTime" data-keyboard="false">
+            <div class="overlay_screen">
+                <div class="play_btn fp-toggle"></div>
+                <h4>Waxom Video Presentation</h4>
+                <p class="description_text">Investigationes demonstraverunt lectores legere me lius quod ii legunt saepius, qui sequitur mutationem consuetudium.</p>
+                <p class="time" id="curPos">00:00</p>
+            </div>
+            <video>
+              <source type='video/mp4; codecs="avc1.42E031, mp4a.40.2"' src="video/HarrierJet1.mp4">
+              <source type='video/webm; codecs="vp8, vorbis"' src="video/HarrierJet1.webm">
+              <source type='video/ogg; codecs="theora, vorbis"' src="video/HarrierJet1.ogv">
+            </video>
+          </section>
+          <section class="excellent">
+            <div class="container">
+                <div class="row align-items-center">
+                    <div class="col-md-5">
+                        <img class="img-fluid" src="img/iphone.png" alt="">
+                    </div>
+                    <div class="col-md-7 text-left">
+                        <h4>Excellent for Mobile Devices.</h4>
+                        <p>Qisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat. Investigationes demonstraverunt lectores legere me lius quod ii legunt saepius claritas. Eodem modo typi, qui nunc nobis videntur parum clari, fiant sollemnes in futurum.</p>
+                        <ul>
+                            <li>Nam liber tempor cum soluta nobis eleifend option;</li>
+                            <li>Option congue nihil imperdiet doming id quod mazim placerat facer;</li>
+                            <li>Eodem modo typi, qui nunc nobis videntur parum futurum;</li>
+                            <li>Investigationes demonstraverunt lectores</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section class="counts">
+           <div class="container">
+               <div class="row text-center justify-content-center pt-5">
+                   <div class="col-lg-2 col-md-3 col-sm-4 pb-5">
+                       <i class="icon-peoples d-block"></i>
+                       <p class="digits">3587</p>
+                       <p class="items">Satisfied&nbsp;Clients</p>
+                       <div class="line_under_block d-inline-block"></div>
+                   </div>
+                   <div class="col-lg-2 col-md-3 col-sm-4 pb-5">
+                       <i class="icon-cup d-block"></i>
+                       <p class="digits">207</p>
+                       <p class="items">Cups&nbsp;of&nbsp;coffee</p>
+                       <div class="line_under_block d-inline-block"></div>
+                   </div>
+                   <div class="col-lg-2 col-md-3 col-sm-4 pb-5">
+                       <i class="icon-message d-block"></i>
+                       <p class="digits">2500</p>
+                       <p class="items">Blog&nbsp;posts</p>
+                       <div class="line_under_block d-inline-block"></div>
+                   </div>
+                   <div class="col-lg-2 col-md-3 col-sm-4 pb-5">
+                       <i class="icon-heart d-block"></i>
+                       <p class="digits">873</p>
+                       <p class="items">Likes</p>
+                       <div class="line_under_block d-inline-block"></div>
+                   </div>
+                   <div class="col-lg-2 col-md-3 col-sm-4 pb-5">
+                       <i class="icon-ding d-block"></i>
+                       <p class="digits">900</p>
+                       <p class="items">We&nbsp;launched</p>
+                       <div class="line_under_block d-inline-block"></div>
+                   </div>
+               </div>
+           </div>            
+        </section>
+        <section class="recent container text-center">
+            <div class="row pb-2">
+                <div class="col"></div>
+                <div class="col-xl-8 col-md-9">
+                    <h4>Recent Posts.</h4>
+                </div>
+                <div class="col"></div>
+            </div>
+            <div class="row pb-4">
+                <div class="col"></div>
+                <div class="col-xl-8 col-lg-9 col-md-11">
+                    <p class="description_text">Investigationes demonstraverunt lectores legere me lius quod ii legunt saepius. Claritas est etiam processus dynamicus, qui sequitur mutationem consuetudium.</p>
+                </div>
+                <div class="col"></div>
+            </div>
+            <div class="owl-carousel owl-loaded">
+                <div class="owl-stage-outer">
+                    <div class="owl-stage">
+                        <div class="owl-item card">
+                            <img class="card-img-top" src="img/legs.jpg" alt="Legs">
+                            <div class="card-img-overlay">
+                                <p class="date">30</p>
+                                <p class="month">Sep.</p>
+                            </div>
+                            <div class="card-body">
+                                <h5 class="card-title">Lorem ipsum dolor sit amet</h5>
+                                <p class="card-text">Claritas est etiam processus dynamicus, qui sequitur mutationem consuetudium.</p>
+                                <a href="#">Read more <i class="icon-triangle"></i></a>
+                            </div>
+                        </div>
+                        <div class="owl-item card">
+                            <img class="card-img-top" src="img/keyboard.jpg" alt="Keyboard">
+                            <div class="card-img-overlay">
+                                <p class="date">30</p>
+                                <p class="month">Sep.</p>
+                            </div>
+                            <div class="card-body">
+                                <h5 class="card-title">Lorem ipsum dolor sit amet</h5>
+                                <p class="card-text">Claritas est etiam processus dynamicus, qui sequitur mutationem consuetudium.</p>
+                                <a href="#">Read more <i class="icon-triangle"></i></a>
+                            </div>
+                        </div>
+                        <div class="owl-item card">
+                            <img class="card-img-top" src="img/ship.jpg" alt="Ship">
+                            <div class="card-img-overlay">
+                                <p class="date">30</p>
+                                <p class="month">Sep.</p>
+                            </div>
+                            <div class="card-body">
+                                <h5 class="card-title">Lorem ipsum dolor sit amet</h5>
+                                <p class="card-text">Claritas est etiam processus dynamicus, qui sequitur mutationem consuetudium.</p>
+                                <a href="#">Read more <i class="icon-triangle"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="owl-nav">
+                    <button class="owl-prev"><i class="icon-left"></i></button>
+                    <button class="owl-next"><i class="icon-right"></i></button>
+                </div>
+            </div>            
+        </section>
+        <section class="labels">
+          <div class="container py-5">
+              <div class="row align-items-center text-center py-5">
+                  <div class="col-xl-3 col-md-6 py-5">
+                      <img src="img/logo-01.png" alt="Barber">
+                  </div>
+                  <div class="col-xl-3 col-md-6 py-5">
+                      <img src="img/logo-02.png" alt="Delicious">
+                  </div>
+                  <div class="col-xl-3 col-md-6 py-5">
+                      <img src="img/logo-03.png" alt="Designers">
+                  </div>
+                  <div class="col-xl-3 col-md-6 py-5">
+                      <img src="img/logo-04.png" alt="Royal">
+                  </div>
+              </div>
+            </div>
+        </section>
+        <section class="social">
+            <div class="container">
+                <div class="row text-left py-5">
+                  <div class="col-xl-3 col-md-6">
+                      <a class="navbar-brand" href="#">
+                          <img src="img/logos.png" width="64" height="56" class="d-inline-block align-top" alt="logotype">Waxom
+                      </a>
+                      <p class="description">Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci suscipit lobortis claritatem.</p>
+                      <a class="read_more" href="#">Read more <i class="icon-triangle"></i></a>
+                  </div>
+                  <div class="col-xl-3 col-md-6 recent_posts">
+                      <h5>Recent Posts</h5>
+                      <div class="posts">
+                          <p class="date_of_post">September 08, 2015</p>
+                          <a class="post_message" href="#">Lorem ipsum dolor sit amet, consectetuer adipiscing elit</a>
+                      </div>
+                      <div class="posts">
+                          <p class="date_of_post">September 08, 2015</p>
+                          <a class="post_message" href="#">Diam nonummy nibh euismod tincidunt ut laoreet dolore magna</a>
+                      </div>
+                      <div class="posts last_post">
+                          <p class="date_of_post">September 08, 2015</p>
+                          <a class="post_message" href="#">Claritas est etiam processus dynamicus, qui sequitur mutationem per seacula quarta decima</a>
+                      </div>
+                  </div>
+                  <div class="col-xl-3 col-md-6">
+                      <h5>Our Twitter</h5>
+                      <div class="posts">
+                          <p class="twit"><a class="twitter" href="#">@waxom</a> Cum soluta nobis eleifend option congue nihil imperdiet doming</p>
+                          <p class="time_ago">3 mins ago</p>
+                      </div>
+                      <div class="posts">
+                          <p class="twit">Mirum est <a class="twitter" href="#">#envato</a> notare quam littera gothica, quam nunc putamus parum anteposuerit litterarum Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sint fugiat quo delectus obcaecati eos illum aspernatur numquam, consequatur velit soluta voluptates ex a nisi, hic fugit, doloremque voluptatum repellendus minima!</p>
+                          <p class="time_ago">5 hours ago</p>
+                      </div>
+                      <div class="posts last_post">
+                          <p class="twit">Soluta nobis option <a class="links" href="https://bit.ly/1Hniso7">bit.ly/1Hniso7</a></p>
+                          <p class="time_ago">20 days ago</p>
+                      </div>
+                  </div>
+                  <div class="col-xl-3 col-md-6 widget">
+                      <h5>Dribbble Widget</h5>
+                      <div class="row">
+                          <div class="col">
+                              <a href="#"><img class="mr-2 my-2" src="img/phones.jpg" alt="Phones"></a>
+                              <a href="#"><img class="mr-1 my-2" src="img/paper.jpg" alt="Paper"></a>
+                          </div>
+                      </div>
+                      <div class="row">
+                          <div class="col">
+                              <a href="#"><img class="mr-2 my-2" src="img/book.jpg" alt="Book"></a>
+                              <a href="#"><img class="mr-1 my-2" src="img/icons.jpg" alt="Icons"></a>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+            </div>
+        </section>
+        </main>
+        <footer>
+            <div class="container py-5">
+                <div class="row">
+                    <div class="col-lg-5 col-12 px-0">
+                        <ul class="nav justify-content-between">                          
+                          <li class="nav-item">
+                            Copyright &copy; 2015 <a href="#">Waxom</a>
+                          </li>
+                          <li class="nav-item">
+                            <p>|</p>
+                          </li>
+                          <li class="nav-item">
+                            <a href="#">Privacy&nbsp;Policy</a>
+                          </li>
+                          <li class="nav-item">
+                            <p>|</p>
+                          </li>
+                          <li class="nav-item">
+                            <a href="#">FAQ</a>
+                          </li>
+                          <li class="nav-item">
+                            <p>|</p>
+                          </li>
+                          <li class="nav-item">
+                            <a href="#">Support</a>
+                          </li>
+                        </ul>
+                    </div>
+                    <div class="col"></div>
+                    <div class="col-xl-4 col-lg-5 col-12 px-0">
+                        <ul class="nav justify-content-end justify-content-between">                          
+                          <li class="nav-item">
+                            Designed by <a href="#">ThemeFire</a>
+                          </li>
+                          <li class="nav-item">
+                            <p>|</p>
+                          </li>
+                          <li class="nav-item">
+                            Only on <a href="#">Envato Market</a>
+                          </li>                          
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </footer>
+      </div>
+    <script src="js/jquery-3.3.1.slim.js"></script>
     <script src="js/popper.min.js"></script>
     <script src="js/bootstrap.min.js"></script>
-</body>
-
+    <script src="js/bootstrap-autohide-navbar.min.js"></script>
+    <script src="js/scroll-magic.min.js"></script>
+    <script src="js/animation.gsap.min.js"></script>    
+    <script src="js/tween-max.min.js"></script>
+    <script src="js/flowplayer.min.js"></script>
+    <script src="js/owl.carousel.min.js"></script>
+    <script src="js/waxom.js"></script>
+	</body>
 </html>
