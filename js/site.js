@@ -281,7 +281,7 @@ function loadCities(select) {
     let option;
     // Загружаем список городов
     $.ajax({
-        url: 'http://89.108.65.123/cities',
+        url: 'help/cities.json',
         dataType: 'json',
         success: (data, testStatus) => {
             try {
