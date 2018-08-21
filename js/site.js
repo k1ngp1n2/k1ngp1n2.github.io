@@ -308,7 +308,7 @@ function loadCities(select) {
 /** Отображает на странице изображения автомобилей с сайта Flickr */
 function showFlickrImages() {
     // Фото
-    const url = "http://api.flickr.com/services/feeds/photos_public.gne?" +
+    const url = "https://api.flickr.com/services/feeds/photos_public.gne?" +
         "tags=cars&format=json&jsoncallback=?";
     // создаем новый элемент jQuery для помещения в него изображения
     let img;
