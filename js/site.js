@@ -601,9 +601,20 @@ function hideLabelsOnBlur() {
             document.forms.callback.message.parentNode.getElementsByTagName('label')[0].style.display = '';
     };
 }
+/** Включает отображение раздела каталог */
+function showCatalog() {
+    if (document.querySelector('#catalog').style.display === '') {
+        document.querySelector('#catalog').style.display = 'block';
+        document.querySelector('#photo_gallery').style.display = '';
+        document.querySelector('#tabs').style.display = '';
+        document.querySelector('#reg_exp').style.display = '';
+        document.querySelector('#call_back').style.display = '';
+    }
+}
 /** Включает отображение раздела фотогалереи */
 function showGallery() {
     if (document.querySelector('#photo_gallery').style.display === '') {
+        document.querySelector('#catalog').style.display = '';
         document.querySelector('#photo_gallery').style.display = 'block';
         document.querySelector('#tabs').style.display = '';
         document.querySelector('#reg_exp').style.display = '';
@@ -613,6 +624,7 @@ function showGallery() {
 /** Включает отображение раздела промоакций */
 function showPromo() {
     if (document.querySelector('#tabs').style.display === '') {
+        document.querySelector('#catalog').style.display = '';
         document.querySelector('#photo_gallery').style.display = '';
         document.querySelector('#tabs').style.display = 'block';
         document.querySelector('#reg_exp').style.display = '';
@@ -622,6 +634,7 @@ function showPromo() {
 /** Включает отображение раздела новостей */
 function showNews() {
     if (document.querySelector('#reg_exp').style.display === '') {
+        document.querySelector('#catalog').style.display = '';
         document.querySelector('#tabs').style.display = '';
         document.querySelector('#photo_gallery').style.display = '';
         document.querySelector('#reg_exp').style.display = 'block';
@@ -631,6 +644,7 @@ function showNews() {
 /** Включает отображение раздела помощи */
 function showHelp() {
     if (document.querySelector('#call_back').style.display === '') {
+        document.querySelector('#catalog').style.display = '';
         document.querySelector('#tabs').style.display = '';
         document.querySelector('#photo_gallery').style.display = '';
         document.querySelector('#reg_exp').style.display = '';

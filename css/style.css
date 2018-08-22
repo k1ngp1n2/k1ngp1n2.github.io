@@ -37,6 +37,13 @@
     color: black;
     background-color: #998675;
 }
+#basket:active {
+    color: #c81508;
+    background-color: white;
+}
+#catalog {
+    display: none;
+}
 #autoDetailPane {
     margin-top: 1em;
 }
