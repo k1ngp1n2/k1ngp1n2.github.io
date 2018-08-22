@@ -17,22 +17,25 @@
             </div>
             <div class="col pt-5">
                 <section class="container" id="content_window">
-                    <span id="basket">Корзина</span>
+                    <span id="basket" onclick="showCart()">Корзина</span>
                     <p><span class="slide" onclick="btn_slide()">Щелкните здесь, чтобы показать или скрыть подсказку</span></p>
                     <div class="info" id="helper">
-                        <p>Для покупки товаров (работа с корзиной) щелкните на пункте меню "Каталог"</p>
+                        <p>Для работы с корзиной щелкните по кнопке "Корзина"</p>
+                        <p>Для покупки товаров щелкните на пункте меню "Каталог"</p>
                         <p>Чтобы просмотреть управление вкладками щелкните на пункте меню "Промоакции"</p>
                         <p>Чтобы просмотреть результат применения шаблона для замены апострофов щелкните на пункте меню "Новости"</p>
                         <p>Чтобы просмотреть фотогалерею щелкните на пункте меню "Галерея"</p>
                         <p>Чтобы просмотреть форму обратной связи щелкните на пункте меню "Помощь"</p>
                     </div>
+                    <div id="cart"></div>
                     <div id="catalog">
                         <h3>Выберите интересующий Вас автомобиль</h3>
                         <form action="#">
-                            <div id="selectionPane">
+                            <div class="form-group" id="selectionPane">
                                 <label for="autoShooserControl">Выберите автомобиль</label>
-                                <select id="autoShooserControl" name="automobile"></select>
+                                <select class="form-control" id="autoShooserControl" name="automobile"></select>
                             </div>
+                            <input class="btn" type="submit" value="Купить">
                         </form>
                         <div id="autoDetailPane"></div>
                     </div>

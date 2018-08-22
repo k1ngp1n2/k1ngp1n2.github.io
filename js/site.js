@@ -601,9 +601,23 @@ function hideLabelsOnBlur() {
             document.forms.callback.message.parentNode.getElementsByTagName('label')[0].style.display = '';
     };
 }
+/** Включает отображение корзины */
+function showCart() {
+    if (document.querySelector('#cart').style.display === '') {
+        // Получаем содержимое корзины с сервера
+        getBasket();
+        document.querySelector('#cart').style.display = 'block';
+        document.querySelector('#catalog').style.display = '';
+        document.querySelector('#photo_gallery').style.display = '';
+        document.querySelector('#tabs').style.display = '';
+        document.querySelector('#reg_exp').style.display = '';
+        document.querySelector('#call_back').style.display = '';
+    }
+}
 /** Включает отображение раздела каталог */
 function showCatalog() {
     if (document.querySelector('#catalog').style.display === '') {
+        document.querySelector('#cart').style.display = '';
         document.querySelector('#catalog').style.display = 'block';
         document.querySelector('#photo_gallery').style.display = '';
         document.querySelector('#tabs').style.display = '';
@@ -614,6 +628,7 @@ function showCatalog() {
 /** Включает отображение раздела фотогалереи */
 function showGallery() {
     if (document.querySelector('#photo_gallery').style.display === '') {
+        document.querySelector('#cart').style.display = '';
         document.querySelector('#catalog').style.display = '';
         document.querySelector('#photo_gallery').style.display = 'block';
         document.querySelector('#tabs').style.display = '';
@@ -624,6 +639,7 @@ function showGallery() {
 /** Включает отображение раздела промоакций */
 function showPromo() {
     if (document.querySelector('#tabs').style.display === '') {
+        document.querySelector('#cart').style.display = '';
         document.querySelector('#catalog').style.display = '';
         document.querySelector('#photo_gallery').style.display = '';
         document.querySelector('#tabs').style.display = 'block';
@@ -634,6 +650,7 @@ function showPromo() {
 /** Включает отображение раздела новостей */
 function showNews() {
     if (document.querySelector('#reg_exp').style.display === '') {
+        document.querySelector('#cart').style.display = '';
         document.querySelector('#catalog').style.display = '';
         document.querySelector('#tabs').style.display = '';
         document.querySelector('#photo_gallery').style.display = '';
@@ -644,6 +661,7 @@ function showNews() {
 /** Включает отображение раздела помощи */
 function showHelp() {
     if (document.querySelector('#call_back').style.display === '') {
+        document.querySelector('#cart').style.display = '';
         document.querySelector('#catalog').style.display = '';
         document.querySelector('#tabs').style.display = '';
         document.querySelector('#photo_gallery').style.display = '';
@@ -733,6 +751,36 @@ function createCatalog() {
         }
     });
 
+}
+/** Отображает корзину или создает новую корзину
+ * @param userID {String} id покупателя */
+function getBasket(userID='') {
+    // Сервер, на котором хранится корзина покупателя
+    const SERVER_URL = 'http://89.108.65.123:8080/shop';
+    // Загружаем корзину
+    $.ajax({
+        url: SERVER_URL,
+        data: `user_id=${userID}`,
+        dataType: 'json',
+        success: (data, testStatus) => {
+            try {
+                // Бросаем исключение, если загрузка не удалась
+                if (testStatus != 'success') throw new Error('Содержимое корзины с сервера не получено из-за ошибки связи');
+                if (data.cart.length == 0) {
+                    $('#cart').text('Корзина пустая');
+                } else {
+                    $('#cart').html(`<p>Имя пользователя: ${data.user_id}</p><p>Состав корзины: ${data.cart}</p>`);
+                }
+            }
+            catch (e) {
+                // выводим сообщение об ошибке
+                console.error(e.message);
+            }
+        },
+        error: error => {
+            console.error(`${error.status} ${error.responseJSON.message}`);
+        }
+    });
 }
 // Дожидаемся загрузки страницы
 document.addEventListener("DOMContentLoaded", function() {

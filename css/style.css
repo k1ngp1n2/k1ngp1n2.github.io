@@ -24,7 +24,8 @@
 .active {
     color: black;
 }
-#basket {
+#basket, #catalog .btn {
+    background-color: white;
     color: #c81508;
     cursor: pointer;
     display: inline-block;
@@ -33,13 +34,16 @@
     border-radius: 3px;
     margin-bottom: 1em;
 }
-#basket:hover {
+#basket:hover, #catalog .btn:hover {
     color: black;
     background-color: #998675;
 }
-#basket:active {
+#basket:active, #catalog .btn:active {
     color: #c81508;
     background-color: white;
+}
+#autoShooserControl:focus, #catalog .btn:focus {
+    box-shadow: none;
 }
 #catalog {
     display: none;
