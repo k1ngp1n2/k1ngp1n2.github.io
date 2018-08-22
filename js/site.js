@@ -269,6 +269,7 @@ FormSelect.prototype.render = function() {
     let createSelect = document.createElement('select');
     createSelect.id = this.id;
     let option = $("<option></option>");
+    option.attr('value', '');
     option.attr('disabled', 'disabled');
     option.attr('selected', 'selected');
     option.text('--------- Укажите Ваш населенный пункт ---------');
@@ -498,7 +499,7 @@ function regExpOutput() {
     newEl.innerHTML = edittingText;
     document.getElementsByClassName("reg_exp")[0].append(newEl);
 }
-/** Создает форму */
+/** Создает форму обратной связи */
 function createForm() {
     $("#call_back").append(new FormField('input', 'form_name', 'name', 'Имя').render());
     $("#call_back").append(new FormField('input', 'form_phone', 'phone', 'Телефон').render());
@@ -506,6 +507,8 @@ function createForm() {
     $("#call_back").append(new FormField('textarea', 'form_text', 'message', 'Сообщение').render());
     $("#call_back").append(new FormSelect('cities').render());
     $("#call_back").append(new FormButton('form_submit', 'Отправить', 'checkForm(this.form)').render());
+    // Убираем labels, если в поле ввода формы введен какой-то текст
+    hideLabelsOnBlur();
 }
 /** Проверяет строку на соответствие шаблону
  * @param str {String} проверяемая строка
@@ -666,30 +669,69 @@ function btn_slide() {
     $('#helper').slideToggle('slow');
     $('p .slide').toggleClass('active');
 }
-// Обработчик нажатий на селекты формы с каталогом автомобилей
-$('#autoShooserControl').change(event => {
-    $('#productDetailPane').innerText
-})
-// Дожидаемся загрузки страницы
-document.addEventListener("DOMContentLoaded", function() {
-    // Загружаем меню
-    loadMenu();
-    // Скрываем подсказку вверху страницы
-    $('#helper').hide();
-    // Добавляем управление для вкладок раздела Промоакции
-    tabControls();
-    // Работаем с регулярными выражениями
-    regExpOutput();
+/** Создает фотогалерею */
+function createGallery() {
     // Создаем элементы управления галереей
     createGalleryControls();
     // Загружаем изображения для галереи
     loadGallery();
-    // Загружаем изображения с Flickr
-    showFlickrImages();
     // Подключаем обработчик щелчков по кнопкам галереи
     tagFilter();
-    // Создаем форму
+}
+/** Создает элементы, отображаемые на каждой странице */
+function pageTemplate() {
+    // Загружаем меню
+    loadMenu();
+    // Загружаем изображения с Flickr
+    showFlickrImages();
+    // Скрываем подсказку вверху страницы
+    $('#helper').hide();
+}
+/** Создает форму с каталогом автомобилей */
+function createCatalog() {
+    // Загружаем наименование автомобилей в селект формы каталога
+    $('#autoShooserControl').load('catalogue/autoOptions.json');
+    // Загружаем описания автомобилей
+    $.ajax({
+        url: 'catalogue/autoDetails.json',
+        dataType: 'json',
+        success: (data, testStatus) => {
+            try {
+                // Бросаем исключение, если загрузка не удалась
+                if (testStatus != 'success') throw new Error('Список автомобилей с сервера не получен из-за ошибки связи');
+                // Добавляем названия населенных пунктов в поле селект формы
+                $('#autoShooserControl').change( event => {
+                    // Убираем опцию с подсказкой
+                    $('[value=""]', event.target).remove();
+                    // Сохраняем номер выбранной опции
+                    let val = $(event.target).val();
+                    // Отображаем описание автомобиля
+                    $('#autoDetailPane').html(`<p>Название автомобиля ${data[val].name}</p><p>Цена автомобиля ${data[val].price} рублей</p>`);
+                });
+            }
+            catch (e) {
+                // выводим сообщение об ошибке
+                console.error(e.message);
+            }
+        },
+        error: error => {
+            console.error(error);
+        }
+    });
+
+}
+// Дожидаемся загрузки страницы
+document.addEventListener("DOMContentLoaded", function() {
+    // Создаем элементы, отображаемые на каждой странице
+    pageTemplate();
+    // Создаем форму с каталогом автомобилей
+    createCatalog();
+    // Добавляем управление для вкладок раздела Промоакции
+    tabControls();
+    // Работаем с регулярными выражениями
+    regExpOutput();
+    // Создаем фотогалерею
+    createGallery();
+    // Создаем форму обратной связи
     createForm();
-    // Убираем labels, если в поле ввода формы введен какой-то текст
-    hideLabelsOnBlur();
 });

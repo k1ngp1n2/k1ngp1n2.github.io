@@ -37,6 +37,9 @@
     color: black;
     background-color: #998675;
 }
+#autoDetailPane {
+    margin-top: 1em;
+}
 .tabs {
     display: none;
 }
@@ -89,6 +92,7 @@
 }
 #cities {
     color: #b4adad;
+    margin-bottom: 1em;
     padding-left: 0.2em;
     width: 25.5em;
 }
@@ -160,6 +164,9 @@
 #cities:hover {
     background-color: aliceblue;
 }
+#cities:focus {
+    background-color: aliceblue;
+}
 #form_name:focus
 {
     background-color: aliceblue;
@@ -193,9 +200,6 @@
 }
 #call_back .error {
     color: red;
-}
-#cities {
-    margin-bottom: 1em;
 }
 #photo_gallery {
     display: none;
