@@ -895,10 +895,19 @@ function showBasket(basketData) {
         $('#cart').text('Товары в корзине отсутствуют. Перейдите в каталог сайта, чтобы выбрать нужные Вам товары');
     } else {
         let basket = `<p>Имя покупателя: ${basketData.user_id}</p><p>Состав корзины:</p>`;
+        // Общая стоимость товаров в корзине
+        let value = 0;
         for (let i = 0; i < basketData.cart.length; i++) {
+            // Визуализируем каждый товар в корзине
             basket += `<div class="card automobile"><div class="card-body"><p class="card-text">${i+1}) Наименование: ${basketData.cart[i].product}</p><p class="card-text">Цена: ${basketData.cart[i].price}</p><a href="#" class="btn" id="item${i}">Удалить товар из корзины</a></div></div>`;
+            // Определяем общую стоимость товаров в корзине
+            value += Number(basketData.cart[i].price);
         }
+        // Визуализируем общую стоимость товаров в корзине
+        basket += `<p>Общая стоимость товаров в корзине: ${value} рублей.</p>`;
+        // Визуализируем содержимое корзины на странице
         $('#cart').html(basket);
+        // Добавляем кнопки удаления товара из корзины для каждого товара в корзине
         for (let i = 0; i < basketData.cart.length; i++) {
             $(`#item${i}`).click(basketData.cart[i], (eventObject) => {
                 deleteItemFromBasket(eventObject.data.product_id);
