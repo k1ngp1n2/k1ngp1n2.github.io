@@ -24,7 +24,7 @@
 .active {
     color: black;
 }
-#basket, #catalog .btn {
+#basket, #catalog .btn, #cart .btn {
     background-color: white;
     color: #c81508;
     cursor: pointer;
@@ -34,18 +34,18 @@
     border-radius: 3px;
     margin-bottom: 1em;
 }
-#basket:hover, #catalog .btn:hover {
+#basket:hover, #catalog .btn:hover, #cart .btn:hover {
     color: black;
     background-color: #998675;
 }
-#basket:active, #catalog .btn:active {
+#basket:active, #catalog .btn:active, #cart .btn:active {
     color: #c81508;
     background-color: white;
 }
 #cart {
     display: none;
 }
-#autoShooserControl:focus, #catalog .btn:focus {
+#autoShooserControl:focus, #catalog .btn:focus, #cart .btn:focus {
     box-shadow: none;
 }
 #catalog {

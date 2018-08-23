@@ -1,9 +1,9 @@
-// id пользователя
-let userID = '';
 // Адрес сервера
 const SERVER_URL = 'http://89.108.65.123:8080';
-//
-let authUser = false;
+// id пользователя
+let userID = '';
+// Авторизуем пользователя
+userAuthorization();
 // Устанавливаем флаг необходимости загрузки списка населенных пунктов при первом открытии страницы с формой обратной связи
 let citiesLoaded = false;
 /** Абстрактный элемент страницы (суперкласс) */
@@ -769,7 +769,7 @@ function addAutomobiles(automobilesData) {
         $('#autoDetailPane').html(`<p>Название автомобиля ${automobilesData[val].name}</p><p>Цена автомобиля ${automobilesData[val].price} рублей</p>`);
     });
 }
-/**  */
+/** Добавляет обработчик для добавления товара в корзину */
 function shooseItem(automobilesData) {
     let autoCatalog = document.querySelector('#autoCatalog');
     let autoShooserControl = document.querySelector('#autoShooserControl');
@@ -802,7 +802,6 @@ function userAuthorization() {
         }
     });
 }
-
 /** Загружает с сервера данные корзины, затем отображает корзину или создает новую корзину
  * @param consumerID {String} id покупателя */
 function getBasket(consumerID='') {
@@ -836,7 +835,9 @@ function showBasket(basketData) {
     } else {
         let basket = `<p>Имя пользователя: ${basketData.user_id}</p><p>Состав корзины:</p>`;
         for (let i = 0; i < basketData.cart.length; i++) {
-            basket += `<p>${i+1}) Наименование: ${basketData.cart[i].product}</p><p>Цена: ${basketData.cart[i].price}</p>`;
+            data =
+            basket += `<div class="card"><div class="card-body"><p class="card-text">${i+1}) Наименование: ${basketData.cart[i].product}</p><p class="card-text">Цена: ${basketData.cart[i].price}</p><a href="#" class="btn">Удалить товар из корзины</a></div></div>`;
+            // TODO добавить deleteItemFromBasket(basketData.cart[i], basketData.cart[i].product_id) каждому пункту корзины
         }
         $('#cart').html(basket);
     }
@@ -864,10 +865,29 @@ function addItemToBasket(item, price) {
         }
     });
 }
+/** Удаляет товар из корзины */
+function deleteItemFromBasket(basketData, productID) {
+    $.ajax({
+        url: `${SERVER_URL}/shop?user_id=${userID}&product=${productID}`,
+        type: 'delete',
+        dataType: 'json',
+        success: (data, testStatus) => {
+            try {
+                // Бросаем исключение, если загрузка не удалась
+                if (testStatus != 'success') throw new Error('Товар из корзины не удален из-за ошибки связи');
+            }
+            catch (e) {
+                // выводим сообщение об ошибке
+                console.error(e.message);
+            }
+        },
+        error: error => {
+            console.error(`${error.status} ${error.responseJSON.message}`);
+        }
+    });
+}
 // Дожидаемся загрузки страницы
 document.addEventListener("DOMContentLoaded", function() {
-    // Авторизуем пользователя
-    userAuthorization();
     // Создаем элементы, отображаемые на каждой странице
     pageTemplate();
     // Создаем форму с каталогом автомобилей
