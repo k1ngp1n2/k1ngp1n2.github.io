@@ -835,11 +835,14 @@ function showBasket(basketData) {
     } else {
         let basket = `<p>Имя пользователя: ${basketData.user_id}</p><p>Состав корзины:</p>`;
         for (let i = 0; i < basketData.cart.length; i++) {
-            data =
-            basket += `<div class="card"><div class="card-body"><p class="card-text">${i+1}) Наименование: ${basketData.cart[i].product}</p><p class="card-text">Цена: ${basketData.cart[i].price}</p><a href="#" class="btn">Удалить товар из корзины</a></div></div>`;
-            // TODO добавить deleteItemFromBasket(basketData.cart[i], basketData.cart[i].product_id) каждому пункту корзины
+            basket += `<div class="card automobile"><div class="card-body"><p class="card-text">${i+1}) Наименование: ${basketData.cart[i].product}</p><p class="card-text">Цена: ${basketData.cart[i].price}</p><a href="#" class="btn" id="item${i}">Удалить товар из корзины</a></div></div>`;
         }
         $('#cart').html(basket);
+        for (let i = 0; i < basketData.cart.length; i++) {
+            $(`#item${i}`).click(basketData.cart[i], (eventObject) => {
+                deleteItemFromBasket(eventObject.data.product_id);
+            });
+        }
     }
 }
 /** Добавляет товар в корзину
@@ -866,15 +869,17 @@ function addItemToBasket(item, price) {
     });
 }
 /** Удаляет товар из корзины */
-function deleteItemFromBasket(basketData, productID) {
+function deleteItemFromBasket(productID) {
     $.ajax({
-        url: `${SERVER_URL}/shop?user_id=${userID}&product=${productID}`,
+        url: `${SERVER_URL}/shop?user_id=${userID}&product_id=${productID}`,
         type: 'delete',
         dataType: 'json',
         success: (data, testStatus) => {
             try {
                 // Бросаем исключение, если загрузка не удалась
                 if (testStatus != 'success') throw new Error('Товар из корзины не удален из-за ошибки связи');
+                // Обтображаем содержимое корзины после удаления товара
+                showBasket(data);
             }
             catch (e) {
                 // выводим сообщение об ошибке
