@@ -439,7 +439,7 @@ function loadMenu() {
 /** Создает элементы управления галереей */
 function createGalleryControls() {
     // Названия кнопок
-    const buttonNames = ["Все", "Audi quattro", "Audi R-8", "Aston Martin", "Ferrari", "Lamborghini"];
+    const buttonNames = ["Все", "Aston Martin", "Audi quattro", "Audi R-8", "Ferrari", "Lamborghini"];
     for (let i = 0; i < buttonNames.length; i++) {
         $(".gallery_controls").append(new Button("tag_filter", buttonNames[i]).render());
     }
@@ -607,6 +607,20 @@ function hideLabelsOnBlur() {
             document.forms.callback.message.parentNode.getElementsByTagName('label')[0].style.display = '';
     };
 }
+/** Включает отображение раздела о компании */
+function showCompanyInfo() {
+    if (document.querySelector('#company').style.display === '') {
+        // Получаем все комментарии
+        getComments();
+        document.querySelector('#cart').style.display = '';
+        document.querySelector('#catalog').style.display = '';
+        document.querySelector('#photo_gallery').style.display = '';
+        document.querySelector('#tabs').style.display = '';
+        document.querySelector('#reg_exp').style.display = '';
+        document.querySelector('#company').style.display = 'block';
+        document.querySelector('#call_back').style.display = '';
+    }
+}
 /** Включает отображение корзины */
 function showCart() {
     if (document.querySelector('#cart').style.display === '') {
@@ -617,6 +631,7 @@ function showCart() {
         document.querySelector('#photo_gallery').style.display = '';
         document.querySelector('#tabs').style.display = '';
         document.querySelector('#reg_exp').style.display = '';
+        document.querySelector('#company').style.display = '';
         document.querySelector('#call_back').style.display = '';
     }
 }
@@ -628,6 +643,7 @@ function showCatalog() {
         document.querySelector('#photo_gallery').style.display = '';
         document.querySelector('#tabs').style.display = '';
         document.querySelector('#reg_exp').style.display = '';
+        document.querySelector('#company').style.display = '';
         document.querySelector('#call_back').style.display = '';
     }
 }
@@ -639,6 +655,7 @@ function showGallery() {
         document.querySelector('#photo_gallery').style.display = 'block';
         document.querySelector('#tabs').style.display = '';
         document.querySelector('#reg_exp').style.display = '';
+        document.querySelector('#company').style.display = '';
         document.querySelector('#call_back').style.display = '';
     }
 }
@@ -650,6 +667,7 @@ function showPromo() {
         document.querySelector('#photo_gallery').style.display = '';
         document.querySelector('#tabs').style.display = 'block';
         document.querySelector('#reg_exp').style.display = '';
+        document.querySelector('#company').style.display = '';
         document.querySelector('#call_back').style.display = '';
     }
 }
@@ -661,6 +679,7 @@ function showNews() {
         document.querySelector('#tabs').style.display = '';
         document.querySelector('#photo_gallery').style.display = '';
         document.querySelector('#reg_exp').style.display = 'block';
+        document.querySelector('#company').style.display = '';
         document.querySelector('#call_back').style.display = '';
     }
 }
@@ -672,6 +691,7 @@ function showHelp() {
         document.querySelector('#tabs').style.display = '';
         document.querySelector('#photo_gallery').style.display = '';
         document.querySelector('#reg_exp').style.display = '';
+        document.querySelector('#company').style.display = '';
         document.querySelector('#call_back').style.display = 'block';
         if (!citiesLoaded) {
             // Подгружаем наименования населенных пунктов в поле селект формы обратной связи
@@ -802,6 +822,47 @@ function userAuthorization() {
         }
     });
 }
+/** Получает с сервера все комментарии и отображает их */
+function getComments() {
+    // Загружаем комментарии
+    $.ajax({
+        url: `${SERVER_URL}/comments`,
+        dataType: 'json',
+        success: (data, testStatus) => {
+            try {
+                // Бросаем исключение, если загрузка не удалась
+                if (testStatus != 'success') throw new Error('Комментарии с сервера не получены из-за ошибки связи');
+                // Отображаем комментарии
+                showComments(data);
+            }
+            catch (e) {
+                // выводим сообщение об ошибке
+                console.error(e.message);
+            }
+        },
+        error: error => {
+            console.error(`${error.status} ${error.responseJSON.message}`);
+        }
+    });
+}
+/** Отображает комментарии
+ * @param commentsData {Object} json-данные комментариев */
+function showComments(commentsData) {
+    if (commentsData.length == 0) {
+        $('#cart').text('Отзывы о магазине отсутствуют. Пожалуйста, оставьте Ваш отзыв.');
+    } else {
+        let comments = `Отзывы покупателей о нас:</h4>`;
+        for (let i = 0; i < commentsData.length; i++) {
+            comments += `<div class="card comments"><div class="card-body"><p class="card-text user">${i+1}) Имя пользователя: ${commentsData[i].comment_id}</p><p class="card-text title">Содержание отзыва:</p><p class="card-text message">${commentsData[i].text}</p><p class="card-text like">Оценка работы магазина: ${commentsData[i].likes}</p><a href="#" class="btn" id="comment${i}">Удалить комментарий</a></div></div>`;
+        }
+        $('#company').html(comments);
+/*        for (let i = 0; i < basketData.cart.length; i++) {
+            $(`#item${i}`).click(basketData.cart[i], (eventObject) => {
+                deleteItemFromBasket(eventObject.data.product_id);
+            });
+        }*/
+    }
+}
 /** Загружает с сервера данные корзины, затем отображает корзину или создает новую корзину
  * @param consumerID {String} id покупателя */
 function getBasket(consumerID='') {
@@ -831,9 +892,9 @@ function getBasket(consumerID='') {
  * @param basketData {Object} json-данные содержимого корзины */
 function showBasket(basketData) {
     if (basketData.cart.length == 0) {
-        $('#cart').text('Корзина пустая');
+        $('#cart').text('Товары в корзине отсутствуют. Перейдите в каталог сайта, чтобы выбрать нужные Вам товары');
     } else {
-        let basket = `<p>Имя пользователя: ${basketData.user_id}</p><p>Состав корзины:</p>`;
+        let basket = `<p>Имя покупателя: ${basketData.user_id}</p><p>Состав корзины:</p>`;
         for (let i = 0; i < basketData.cart.length; i++) {
             basket += `<div class="card automobile"><div class="card-body"><p class="card-text">${i+1}) Наименование: ${basketData.cart[i].product}</p><p class="card-text">Цена: ${basketData.cart[i].price}</p><a href="#" class="btn" id="item${i}">Удалить товар из корзины</a></div></div>`;
         }

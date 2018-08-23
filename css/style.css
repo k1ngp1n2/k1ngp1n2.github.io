@@ -85,6 +85,21 @@
 .reg_exp {
     display: none;
 }
+#company {
+    display: none;
+}
+#company .user {
+    color: #ff9c2b;
+}
+#company .title {
+    font-weight: bold;
+}
+#company .message {
+    font-style: italic;
+}
+#company .like {
+    color: gold;
+}
 #call_back {
     display: none;
     position: relative;
