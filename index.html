@@ -17,7 +17,6 @@
             </div>
             <div class="col pt-5">
                 <section class="container" id="content_window">
-                    <span id="basket" onclick="showCart()">Корзина</span>
                     <p><span class="slide" onclick="btn_slide()">Щелкните здесь, чтобы показать или скрыть подсказку</span></p>
                     <div class="info" id="helper">
                         <p>Для работы с корзиной щелкните по кнопке "Корзина"</p>
@@ -27,10 +26,11 @@
                         <p>Чтобы просмотреть фотогалерею щелкните на пункте меню "Галерея"</p>
                         <p>Чтобы просмотреть форму обратной связи щелкните на пункте меню "Помощь"</p>
                     </div>
+                    <span id="basket" onclick="showCart()">Корзина</span>
                     <div id="cart"></div>
                     <div id="catalog">
                         <h3>Выберите интересующий Вас автомобиль</h3>
-                        <form action="#">
+                        <form action="#" id="autoCatalog">
                             <div class="form-group" id="selectionPane">
                                 <label for="autoShooserControl">Выберите автомобиль</label>
                                 <select class="form-control" id="autoShooserControl" name="automobile"></select>

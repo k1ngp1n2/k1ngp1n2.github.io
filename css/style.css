@@ -42,6 +42,9 @@
     color: #c81508;
     background-color: white;
 }
+#cart {
+    display: none;
+}
 #autoShooserControl:focus, #catalog .btn:focus {
     box-shadow: none;
 }

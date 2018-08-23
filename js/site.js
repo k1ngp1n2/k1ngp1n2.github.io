@@ -1,3 +1,9 @@
+// id пользователя
+let userID = '';
+// Адрес сервера
+const SERVER_URL = 'http://89.108.65.123:8080';
+//
+let authUser = false;
 // Устанавливаем флаг необходимости загрузки списка населенных пунктов при первом открытии страницы с формой обратной связи
 let citiesLoaded = false;
 /** Абстрактный элемент страницы (суперкласс) */
@@ -605,7 +611,7 @@ function hideLabelsOnBlur() {
 function showCart() {
     if (document.querySelector('#cart').style.display === '') {
         // Получаем содержимое корзины с сервера
-        getBasket();
+        getBasket(userID);
         document.querySelector('#cart').style.display = 'block';
         document.querySelector('#catalog').style.display = '';
         document.querySelector('#photo_gallery').style.display = '';
@@ -719,10 +725,8 @@ function pageTemplate() {
     // Скрываем подсказку вверху страницы
     $('#helper').hide();
 }
-/** Создает форму с каталогом автомобилей */
-function createCatalog() {
-    // Загружаем наименование автомобилей в селект формы каталога
-    $('#autoShooserControl').load('catalogue/autoOptions.json');
+/** Загружает названия и цены автомобилей */
+function loadCatalog() {
     // Загружаем описания автомобилей
     $.ajax({
         url: 'catalogue/autoDetails.json',
@@ -730,16 +734,11 @@ function createCatalog() {
         success: (data, testStatus) => {
             try {
                 // Бросаем исключение, если загрузка не удалась
-                if (testStatus != 'success') throw new Error('Список автомобилей с сервера не получен из-за ошибки связи');
-                // Добавляем названия населенных пунктов в поле селект формы
-                $('#autoShooserControl').change( event => {
-                    // Убираем опцию с подсказкой
-                    $('[value=""]', event.target).remove();
-                    // Сохраняем номер выбранной опции
-                    let val = $(event.target).val();
-                    // Отображаем описание автомобиля
-                    $('#autoDetailPane').html(`<p>Название автомобиля ${data[val].name}</p><p>Цена автомобиля ${data[val].price} рублей</p>`);
-                });
+                if (testStatus != 'success') throw new Error('Сведения об автомобилях с сервера не получены из-за ошибки связи');
+                // Добавляем названия автомобилей в поле селект формы
+                addAutomobiles(data);
+                // Добавляем обработчик щелчков по товарам в списке каталога
+                shooseItem(data);
             }
             catch (e) {
                 // выводим сообщение об ошибке
@@ -750,27 +749,110 @@ function createCatalog() {
             console.error(error);
         }
     });
-
 }
-/** Отображает корзину или создает новую корзину
- * @param userID {String} id покупателя */
-function getBasket(userID='') {
-    // Сервер, на котором хранится корзина покупателя
-    const SERVER_URL = 'http://89.108.65.123:8080/shop';
+/** Создает форму с каталогом автомобилей */
+function createCatalog() {
+    // Загружаем наименования автомобилей в селект формы каталога
+    $('#autoShooserControl').load('catalogue/autoOptions.json');
+    // Загружаем названия и цены автомобилей
+    loadCatalog();
+}
+/** Добавляет обработчик щелчков по названиям автомобилей в поле селект формы
+ * @param automobilesData {Object} json-данные об автомобилях */
+function addAutomobiles(automobilesData) {
+    $('#autoShooserControl').change( event => {
+        // Убираем опцию с подсказкой
+        $('[value=""]', event.target).remove();
+        // Сохраняем номер выбранной опции
+        let val = $(event.target).val();
+        // Отображаем описание автомобиля
+        $('#autoDetailPane').html(`<p>Название автомобиля ${automobilesData[val].name}</p><p>Цена автомобиля ${automobilesData[val].price} рублей</p>`);
+    });
+}
+/**  */
+function shooseItem(automobilesData) {
+    let autoCatalog = document.querySelector('#autoCatalog');
+    let autoShooserControl = document.querySelector('#autoShooserControl');
+    // Добавляем обработчик событий отправки при нажатии на товар в списке каталога
+    autoCatalog.addEventListener('submit', (event) => {
+        event.preventDefault();
+        addItemToBasket(automobilesData[autoShooserControl.value].name, automobilesData[autoShooserControl.value].price);
+    });
+}
+/** Авторизирует пользователя */
+function userAuthorization() {
+    $.ajax({
+        url: `${SERVER_URL}/shop`,
+        data: {'user_id': userID},
+        dataType: 'json',
+        success: (data, testStatus) => {
+            try {
+                // Бросаем исключение, если загрузка не удалась
+                if (testStatus != 'success') throw new Error('id пользователя с сервера не получено из-за ошибки связи');
+                // Сохраняем id пользователя
+                userID = data.user_id;
+            }
+            catch (e) {
+                // выводим сообщение об ошибке
+                console.error(e.message);
+            }
+        },
+        error: error => {
+            console.error(`${error.status} ${error.responseJSON.message}`);
+        }
+    });
+}
+
+/** Загружает с сервера данные корзины, затем отображает корзину или создает новую корзину
+ * @param consumerID {String} id покупателя */
+function getBasket(consumerID='') {
     // Загружаем корзину
     $.ajax({
-        url: SERVER_URL,
-        data: `user_id=${userID}`,
+        url: `${SERVER_URL}/shop`,
+        data: {'user_id': consumerID},
         dataType: 'json',
         success: (data, testStatus) => {
             try {
                 // Бросаем исключение, если загрузка не удалась
                 if (testStatus != 'success') throw new Error('Содержимое корзины с сервера не получено из-за ошибки связи');
-                if (data.cart.length == 0) {
-                    $('#cart').text('Корзина пустая');
-                } else {
-                    $('#cart').html(`<p>Имя пользователя: ${data.user_id}</p><p>Состав корзины: ${data.cart}</p>`);
-                }
+                // Отображаем содержимое корзины
+                showBasket(data);
+            }
+            catch (e) {
+                // выводим сообщение об ошибке
+                console.error(e.message);
+            }
+        },
+        error: error => {
+            console.error(`${error.status} ${error.responseJSON.message}`);
+        }
+    });
+}
+/** Отображает содержимое корзины
+ * @param basketData {Object} json-данные содержимого корзины */
+function showBasket(basketData) {
+    if (basketData.cart.length == 0) {
+        $('#cart').text('Корзина пустая');
+    } else {
+        let basket = `<p>Имя пользователя: ${basketData.user_id}</p><p>Состав корзины:</p>`;
+        for (let i = 0; i < basketData.cart.length; i++) {
+            basket += `<p>${i+1}) Наименование: ${basketData.cart[i].product}</p><p>Цена: ${basketData.cart[i].price}</p>`;
+        }
+        $('#cart').html(basket);
+    }
+}
+/** Добавляет товар в корзину
+ * @param item {String} товар, добавляемый в корзину
+ * @param price {Price} цена товара, добавляемого в корзину */
+function addItemToBasket(item, price) {
+    $.ajax({
+        url: `${SERVER_URL}/shop?user_id=${userID}&product=${item}&price=${price}`,
+        type: 'post',
+        dataType: 'json',
+        success: (data, testStatus) => {
+            try {
+                // Бросаем исключение, если загрузка не удалась
+                if (testStatus != 'success') throw new Error('Товар в корзину не добавлен из-за ошибки связи');
             }
             catch (e) {
                 // выводим сообщение об ошибке
@@ -784,6 +866,8 @@ function getBasket(userID='') {
 }
 // Дожидаемся загрузки страницы
 document.addEventListener("DOMContentLoaded", function() {
+    // Авторизуем пользователя
+    userAuthorization();
     // Создаем элементы, отображаемые на каждой странице
     pageTemplate();
     // Создаем форму с каталогом автомобилей
