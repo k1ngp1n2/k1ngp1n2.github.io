@@ -457,7 +457,7 @@ function loadGallery() {
                 console.error(error);
             });
     }
-};
+}
 /** Обработчик нажатий клавиш фильтрации фотографий по тегу */
 function tagFilter(){
     /** Обработчик нажатий клавиш фильтрации фотографий по тегу */
@@ -610,8 +610,8 @@ function hideLabelsOnBlur() {
 /** Включает отображение раздела о компании */
 function showCompanyInfo() {
     if (document.querySelector('#company').style.display === '') {
-        // Получаем все комментарии
-        getComments();
+        // Создаем страницу с отзывами
+        createCommentPage();
         document.querySelector('#cart').style.display = '';
         document.querySelector('#catalog').style.display = '';
         document.querySelector('#photo_gallery').style.display = '';
@@ -822,17 +822,46 @@ function userAuthorization() {
         }
     });
 }
-/** Получает с сервера все комментарии и отображает их */
+/** Создает страницу с отзывами о магазине */
+function createCommentPage() {
+    // Номер последнего отображенного отзыва
+    let lastCommentNumber;
+    // Добавляем форму для отправки отзывов
+    createCommentForm();
+    // Добавлем обработчик отправки отзывов на сервер
+    onClickSubmitNewComment();
+    // Получаем все отзывы с сервера
+    getComments();
+}
+/** Добавляет форму для отправки отзыва */
+function createCommentForm() {
+    // Добавляет форму для отправки отзывов
+    $('#company').html(`<form id="add_new_comment"><label for="new_comment">Что Вы думаете о нашем магазине?</label><input id="new_comment"><input class="btn" id="send_comment" type="submit" value="Отправить отзыв"></form>`);
+}
+/** Добавлет обработчик отправки отзывов на сервер */
+function onClickSubmitNewComment() {
+    let addNewComment = document.querySelector('#add_new_comment');
+    let newComment = document.querySelector('#new_comment');
+    addNewComment.addEventListener('submit', (event) => {
+        event.preventDefault();
+        // Увеличиваем номер последнего визуализируемого отзыва
+        lastCommentNumber++;
+        // Отправляем новый отзыв на сервер
+        sendNewComment(newComment.value, lastCommentNumber);
+        newComment.value = '';
+    });
+}
+/** Получает с сервера все отзывы и отображает их */
 function getComments() {
-    // Загружаем комментарии
+    // Загружаем отзывы
     $.ajax({
         url: `${SERVER_URL}/comments`,
         dataType: 'json',
         success: (data, testStatus) => {
             try {
                 // Бросаем исключение, если загрузка не удалась
-                if (testStatus != 'success') throw new Error('Комментарии с сервера не получены из-за ошибки связи');
-                // Отображаем комментарии
+                if (testStatus != 'success') throw new Error('Отзывы с сервера не получены из-за ошибки связи');
+                // Отображаем отзывы
                 showComments(data);
             }
             catch (e) {
@@ -845,27 +874,53 @@ function getComments() {
         }
     });
 }
-/** Отображает комментарии
- * @param commentsData {Object} json-данные комментариев */
+/** Отображает отзывы
+ * @param commentsData {Object} json-данные отзывов */
 function showComments(commentsData) {
     if (commentsData.length == 0) {
         $('#cart').text('Отзывы о магазине отсутствуют. Пожалуйста, оставьте Ваш отзыв.');
     } else {
-        let comments = `Отзывы покупателей о нас:</h4>`;
+        let comments = `<h4>Отзывы покупателей о нас:</h4>`;
         for (let i = 0; i < commentsData.length; i++) {
-            comments += `<div class="card comments"><div class="card-body"><p class="card-text user">${i+1}) Имя пользователя: ${commentsData[i].comment_id}</p><p class="card-text title">Содержание отзыва:</p><p class="card-text message">${commentsData[i].text}</p><p class="card-text like">Оценка работы магазина: ${commentsData[i].likes}</p><a href="#" class="btn" id="comment${i}">Удалить комментарий</a></div></div>`;
+            comments += `<div class="card comments"><div class="card-body"><p class="card-text user">${i+1}) Номер отзыва: ${commentsData[i].comment_id}</p><p class="card-text title">Содержание отзыва:</p><p class="card-text message">${commentsData[i].text}</p><p class="card-text like">Оценка отзыва: ${commentsData[i].likes}</p><a href="#" class="btn" id="comment${i}">Удалить отзыв</a></div></div>`;
         }
-        $('#company').html(comments);
-/*        for (let i = 0; i < basketData.cart.length; i++) {
-            $(`#item${i}`).click(basketData.cart[i], (eventObject) => {
-                deleteItemFromBasket(eventObject.data.product_id);
-            });
-        }*/
+        $('#company').append(comments);
+        // Сохраняем номер последнего оображенного отзыва
+        lastCommentNumber = commentsData.length;
     }
+}
+/** Добавляет новый отзыв в базу отзывов на сервере
+ * @param comment {String} текст отзыва */
+function sendNewComment(comment) {
+    $.ajax({
+        url: `${SERVER_URL}/comments?text=${comment}`,
+        type: 'post',
+        dataType: 'json',
+        success: (data, testStatus) => {
+            try {
+                // Бросаем исключение, если загрузка не удалась
+                if (testStatus != 'success') throw new Error('Отзыв не добавлен из-за ошибки связи');
+                // Визуализирует новый отзыв на странице отзывов
+                showNewComment(data);
+            }
+            catch (e) {
+                // выводим сообщение об ошибке
+                console.error(e.message);
+            }
+        },
+        error: error => {
+            console.error(`${error.status} ${error.responseJSON.message}`);
+        }
+    });
+}
+/** Визуализирует новый отзыв на странице
+ * @param {Object} полученные с сервера json-данные нового отзыва */
+function showNewComment(commentData) {
+    $('#company').append(`<div class="card comments"><div class="card-body"><p class="card-text user">${lastCommentNumber}) Номер отзыва: ${commentData.comment_id}</p><p class="card-text title">Содержание отзыва:</p><p class="card-text message">${commentData.text}</p><p class="card-text like">Оценка отзыва: ${commentData.likes}</p><a href="#" class="btn" id="comment${lastCommentNumber}">Удалить отзыв</a></div></div>`);
 }
 /** Загружает с сервера данные корзины, затем отображает корзину или создает новую корзину
  * @param consumerID {String} id покупателя */
-function getBasket(consumerID='') {
+function getBasket(consumerID) {
     // Загружаем корзину
     $.ajax({
         url: `${SERVER_URL}/shop`,
@@ -938,7 +993,8 @@ function addItemToBasket(item, price) {
         }
     });
 }
-/** Удаляет товар из корзины */
+/** Удаляет товар из корзины
+ * @param productID id удаляемого товара */
 function deleteItemFromBasket(productID) {
     $.ajax({
         url: `${SERVER_URL}/shop?user_id=${userID}&product_id=${productID}`,

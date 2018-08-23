@@ -24,7 +24,7 @@
 .active {
     color: black;
 }
-#basket, #catalog .btn, #cart .btn {
+#basket, #catalog .btn, #cart .btn, #send_comment {
     background-color: white;
     color: #c81508;
     cursor: pointer;
@@ -34,18 +34,18 @@
     border-radius: 3px;
     margin-bottom: 1em;
 }
-#basket:hover, #catalog .btn:hover, #cart .btn:hover {
+#basket:hover, #catalog .btn:hover, #cart .btn:hover, #send_comment:hover {
     color: black;
     background-color: #998675;
 }
-#basket:active, #catalog .btn:active, #cart .btn:active {
+#basket:active, #catalog .btn:active, #cart .btn:active, #send_comment:active {
     color: #c81508;
     background-color: white;
 }
 #cart {
     display: none;
 }
-#autoShooserControl:focus, #catalog .btn:focus, #cart .btn:focus {
+#autoShooserControl:focus, #catalog .btn:focus, #cart .btn:focus, #send_comment:focus {
     box-shadow: none;
 }
 #catalog {
@@ -87,6 +87,15 @@
 }
 #company {
     display: none;
+}
+#company label {
+    font-weight: bold;
+}
+#new_comment {
+    margin-bottom: 1em;
+}
+#send_comment {
+    margin-bottom: 1em;
 }
 #company .user {
     color: #ff9c2b;
