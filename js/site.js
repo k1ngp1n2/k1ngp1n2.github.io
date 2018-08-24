@@ -883,7 +883,7 @@ function showComments(commentsData) {
     } else {
         let comments = `<h4>Отзывы покупателей о нас:</h4>`;
         for (let i = 0; i < commentsData.length; i++) {
-            comments += `<div class="card comments"><div class="card-body"><p class="card-text user">${i+1}) Номер отзыва: ${commentsData[i].comment_id}</p><p class="card-text title">Содержание отзыва:</p><p class="card-text message">${commentsData[i].text}</p><p class="card-text like">Оценка отзыва: <span id="likes${i}">${commentsData[i].likes}</span></p><a href="#" class="btn" id="delete${i}">Удалить отзыв</a><a href="#" class="btn" id="like${i}">Мне нравится</a></div></div>`;
+            comments += `<div class="card comments" id="comment${i}"><div class="card-body"><p class="card-text user">Номер отзыва: ${commentsData[i].comment_id}</p><p class="card-text title">Содержание отзыва:</p><p class="card-text message">${commentsData[i].text}</p><p class="card-text like">Оценка отзыва: <span id="likes${i}">${commentsData[i].likes}</span></p><a href="#" class="btn" id="delete${i}">Удалить отзыв</a><a href="#" class="btn" id="like${i}">Мне нравится</a></div></div>`;
         }
         $('#company').append(comments);
         // Сохраняем номер последнего оображенного отзыва
@@ -892,15 +892,46 @@ function showComments(commentsData) {
             $(`#delete${i}`).click(commentsData[i], (eventObject) => {
                 // отключаем переход по ссылке
                 event.preventDefault();
-                onClickDeleteComment(eventObject.data.comment_id);
+                // Удаляем отзыв по щелчку на кнопку "Удалить отзыв"
+                onClickDeleteComment(eventObject.data.comment_id, i);
             });
             $(`#like${i}`).click(commentsData[i], (eventObject) => {
                 // отключаем переход по ссылке
                 event.preventDefault();
+                // Повышаем оценку отзыва по щелчку на кнопку "Мне нравится"
                 onClickLikelikeComment(eventObject.data.comment_id, i);
             });
         }
     }
+}
+/** Удаляет отзыв по щелчку на кнопку "Удалить отзыв"
+ * @param commentID {String} id отзыва */
+function onClickDeleteComment(commentID, commentNumber) {
+    $.ajax({
+        url: `${SERVER_URL}/comments?comment_id=${commentID}`,
+        type: 'delete',
+        dataType: 'json',
+        success: (data, testStatus) => {
+            try {
+                // Бросаем исключение, если загрузка не удалась
+                if (testStatus != 'success') throw new Error('Отзыв не удален из-за ошибки связи');
+                // Скрываем отзыв со страницы отзывов
+                hideComment(commentNumber);
+            }
+            catch (e) {
+                // выводим сообщение об ошибке
+                console.error(e.message);
+            }
+        },
+        error: error => {
+            console.error(`${error.status} ${error.responseJSON.message}`);
+        }
+    });
+}
+/** Скрывает отзыв на странице отзывов
+ * @param commentNumber {Number} номер отзыва на странице */
+function hideComment(commentNumber) {
+    $(`#comment${commentNumber}`).hide();
 }
 /** Повышает оценку отзыва
  * @param commentID {String} id отзыва
@@ -913,7 +944,7 @@ function onClickLikelikeComment(commentID, commentNumber) {
         success: (data, testStatus) => {
             try {
                 // Бросаем исключение, если загрузка не удалась
-                if (testStatus != 'success') throw new Error('Отзыв не добавлен из-за ошибки связи');
+                if (testStatus != 'success') throw new Error('Оценка отзыва не добавлена из-за ошибки связи');
                 // Визуализируем новую оценку отзыва на странице отзывов
                 showNewLikeForComment(data, commentNumber);
             }
@@ -928,7 +959,7 @@ function onClickLikelikeComment(commentID, commentNumber) {
     });
 }
 /** Визуализирует новую оценку отзыва на странице отзывов
- * @param commentData json-данные отзыва
+ * @param commentData {Object} json-данные отзыва
  * @param commentNumber {Number} номер отзыва */
 function showNewLikeForComment(commentData, commentNumber) {
     $(`#likes${commentNumber}`).html(commentData.likes);
@@ -960,7 +991,7 @@ function sendNewComment(comment) {
 /** Визуализирует новый отзыв на странице
  * @param {Object} полученные с сервера json-данные нового отзыва */
 function showNewComment(commentData) {
-    $('#company').append(`<div class="card comments"><div class="card-body"><p class="card-text user">${lastCommentNumber+1}) Номер отзыва: ${commentData.comment_id}</p><p class="card-text title">Содержание отзыва:</p><p class="card-text message">${commentData.text}</p><p class="card-text like">Оценка отзыва: <span id="likes${lastCommentNumber}">${commentData.likes}</span></p><a href="#" class="btn" id="delete${lastCommentNumber}">Удалить отзыв</a><a href="#" class="btn" id="like${lastCommentNumber}">Мне нравится</a></div></div>`);
+    $('#company').append(`<div class="card comments"><div class="card-body"><p class="card-text user">Номер отзыва: ${commentData.comment_id}</p><p class="card-text title">Содержание отзыва:</p><p class="card-text message">${commentData.text}</p><p class="card-text like">Оценка отзыва: <span id="likes${lastCommentNumber}">${commentData.likes}</span></p><a href="#" class="btn" id="delete${lastCommentNumber}">Удалить отзыв</a><a href="#" class="btn" id="like${lastCommentNumber}">Мне нравится</a></div></div>`);
 }
 /** Загружает с сервера данные корзины, затем отображает корзину или создает новую корзину
  * @param consumerID {String} id покупателя */
