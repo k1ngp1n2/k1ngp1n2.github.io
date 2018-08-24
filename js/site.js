@@ -848,8 +848,6 @@ function onClickSubmitNewComment() {
         if (newComment.value !== '') {
             // то отправляем новый отзыв на сервер
             sendNewComment(newComment.value, lastCommentNumber);
-            // Увеличиваем номер последнего визуализируемого отзыва
-            lastCommentNumber++;
             // Очищаем поле ввода
             newComment.value = '';
         }
@@ -890,7 +888,7 @@ function showComments(commentsData) {
         }
         $('#company').append(comments);
         // Сохраняем номер последнего оображенного отзыва
-        lastCommentNumber = commentsData.length - 1;
+        lastCommentNumber = commentsData.length;
         for (let i = 0; i < commentsData.length; i++) {
             $(`#delete${i}`).click(commentsData[i], (eventObject) => {
                 // отключаем переход по ссылке
@@ -902,7 +900,7 @@ function showComments(commentsData) {
                 // отключаем переход по ссылке
                 event.preventDefault();
                 // Повышаем оценку отзыва по щелчку на кнопку "Мне нравится"
-                onClickLikelikeComment(eventObject.data.comment_id, i);
+                onClickLikeComment(eventObject.data.comment_id, i);
             });
         }
     }
@@ -939,7 +937,7 @@ function hideComment(commentNumber) {
 /** Повышает оценку отзыва
  * @param commentID {String} id отзыва
  * @param commentNumber {Number} номер отзыва на странице */
-function onClickLikelikeComment(commentID, commentNumber) {
+function onClickLikeComment(commentID, commentNumber) {
     $.ajax({
         url: `${SERVER_URL}/comments?comment_id=${commentID}`,
         type: 'patch',
@@ -994,20 +992,24 @@ function sendNewComment(comment) {
 /** Визуализирует новый отзыв на странице
  * @param commentData {Object} полученные с сервера json-данные нового отзыва */
 function showNewComment(commentData) {
-    $('#company').append(`<div class="card comments" id="comment${lastCommentNumber}"><div class="card-body"><p class="card-text user">Номер отзыва: ${commentData.comment_id}</p><p class="card-text title">Содержание отзыва:</p><p class="card-text message">${commentData.text}</p><p class="card-text like">Оценка отзыва: <span id="likes${lastCommentNumber}">${commentData.likes}</span></p><a href="#" class="btn" id="delete${lastCommentNumber}">Удалить отзыв</a><a href="#" class="btn" id="like${lastCommentNumber}">Мне нравится</a></div></div>`);
+    // Сохраняем номер отзыва
+    let commentNumber = lastCommentNumber;
+    $('#company').append(`<div class="card comments" id="comment${commentNumber}"><div class="card-body"><p class="card-text user">Номер отзыва: ${commentData.comment_id}</p><p class="card-text title">Содержание отзыва:</p><p class="card-text message">${commentData.text}</p><p class="card-text like">Оценка отзыва: <span id="likes${commentNumber}">${commentData.likes}</span></p><a href="#" class="btn" id="delete${commentNumber}">Удалить отзыв</a><a href="#" class="btn" id="like${commentNumber}">Мне нравится</a></div></div>`);
     // Добавляем обработчики кнопок удаления и оценки для нового отзыва
-    $(`#delete${lastCommentNumber}`).click(commentData, (eventObject) => {
+    $(`#delete${commentNumber}`).click(commentData, (eventObject) => {
         // отключаем переход по ссылке
         event.preventDefault();
         // Удаляем отзыв по щелчку на кнопку "Удалить отзыв"
-        onClickDeleteComment(eventObject.data.comment_id, lastCommentNumber);
+        onClickDeleteComment(eventObject.data.comment_id, commentNumber);
     });
-    $(`#like${lastCommentNumber}`).click(commentData, (eventObject) => {
+    $(`#like${commentNumber}`).click(commentData, (eventObject) => {
         // отключаем переход по ссылке
         event.preventDefault();
         // Повышаем оценку отзыва по щелчку на кнопку "Мне нравится"
-        onClickLikelikeComment(eventObject.data.comment_id, lastCommentNumber);
+        onClickLikeComment(eventObject.data.comment_id, commentNumber);
     });
+    // Увеличиваем номер последнего визуализируемого отзыва
+    lastCommentNumber++;
 }
 /** Загружает с сервера данные корзины, затем отображает корзину или создает новую корзину
  * @param consumerID {String} id покупателя */
