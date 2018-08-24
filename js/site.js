@@ -844,12 +844,15 @@ function onClickSubmitNewComment() {
     let newComment = document.querySelector('#new_comment');
     addNewComment.addEventListener('submit', (event) => {
         event.preventDefault();
-        // Отправляем новый отзыв на сервер
-        sendNewComment(newComment.value, lastCommentNumber);
-        // Увеличиваем номер последнего визуализируемого отзыва
-        lastCommentNumber++;
-        // Очищаем поле ввода
-        newComment.value = '';
+        // Если отзыв написан
+        if (newComment.value !== '') {
+            // то отправляем новый отзыв на сервер
+            sendNewComment(newComment.value, lastCommentNumber);
+            // Увеличиваем номер последнего визуализируемого отзыва
+            lastCommentNumber++;
+            // Очищаем поле ввода
+            newComment.value = '';
+        }
     });
 }
 /** Получает с сервера все отзывы и отображает их */
