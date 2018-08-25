@@ -572,6 +572,7 @@ function checkForm(form) {
     if (validForTemplate(elems.message.value, /^$/)) {
         showError(elems.message.parentNode, 'Оставьте ваше сообщение');
     }
+    $('.error-message').effect("slide", 3000);
 }
 /** Убирает labels, если в поле ввода формы введены символы */
 function hideLabelsOnBlur() {
