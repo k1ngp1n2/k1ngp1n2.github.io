@@ -159,19 +159,26 @@
 {
     top: 1.6em;
 }
-#form_phone + label
-{
+#form_birthday + label {
     top: 6.5em;
 }
-#form_email + label
+#form_phone + label
 {
     top: 11.5em;
 }
-#form_text + label
+#form_email + label
 {
     top: 15.1em;
 }
+#form_text + label
+{
+    top: 20.1em;
+}
 #form_name:focus + label
+{
+    opacity: 0;
+}
+#form_birthday:focus + label
 {
     opacity: 0;
 }
@@ -188,6 +195,10 @@
     opacity: 0;
 }
 #form_name:hover
+{
+    background-color: aliceblue;
+}
+#form_birthday:hover
 {
     background-color: aliceblue;
 }
@@ -210,6 +221,10 @@
     background-color: aliceblue;
 }
 #form_name:focus
+{
+    background-color: aliceblue;
+}
+#form_birthday:focus
 {
     background-color: aliceblue;
 }

@@ -508,6 +508,7 @@ function regExpOutput() {
 /** Создает форму обратной связи */
 function createForm() {
     $("#call_back").append(new FormField('input', 'form_name', 'name', 'Имя').render());
+    $("#call_back").append(new FormField('input', 'form_birthday', 'birthday', 'Дата рождения').render());
     $("#call_back").append(new FormField('input', 'form_phone', 'phone', 'Телефон').render());
     $("#call_back").append(new FormField('input', 'form_email', 'email', 'e-mail').render());
     $("#call_back").append(new FormField('textarea', 'form_text', 'message', 'Сообщение').render());
@@ -515,6 +516,7 @@ function createForm() {
     $("#call_back").append(new FormButton('form_submit', 'Отправить', 'checkForm(this.form)').render());
     // Убираем labels, если в поле ввода формы введен какой-то текст
     hideLabelsOnBlur();
+    $('#form_birthday').datepicker();
 }
 /** Проверяет строку на соответствие шаблону
  * @param str {String} проверяемая строка
@@ -585,6 +587,10 @@ function hideLabelsOnBlur() {
         else
             // иначе отображаем label
             document.forms.callback.name.parentNode.getElementsByTagName('label')[0].style.display = '';
+    };
+    // Обработчик события потери фокуса на поле form_birthday
+    form_birthday.onblur = () => {
+        $('#form_birthday + label')[0].style.top = '8.5em';
     };
     // Обработчик события потери фокуса на поле form_phone
     form_phone.onblur = () => {
