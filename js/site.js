@@ -28,6 +28,7 @@ Container.prototype.remove = function() {
     catch (e) {
         // выводим сообщение об ошибке
         console.error(e.message);
+        $('<div>').text(e.message).dialog({title:'Ошибка удаления контейнера'});
     }
 };
 /** Класс Меню (подкласс класса Container)
@@ -305,10 +306,12 @@ function loadCities(select) {
             catch (e) {
                 // выводим сообщение об ошибке
                 console.error(e.message);
+                $('<div>').text(e.status + ' ' + e.statusText).dialog({title:'Ошибка связи'});
             }
         },
         error: error => {
-            console.error(error);
+            console.error(error.status + ' ' + error.statusText);
+            $('<div>').text(error.status + ' ' + error.statusText).dialog({title:'Ошибка связи'});
         }
     });
 }
@@ -373,6 +376,7 @@ function httpGet(url) {
         };
         // Создаем обработчик события неудачного завершения запроса
         xhr.onerror = function() {
+            $('<div>').text('Сетевая ошибка').dialog({title:'Ошибка связи'});
             reject(new Error("Сетевая ошибка"));
         };
         // Инициализируем объект XMLHttpRequest и сохраняем аргументы для последующего использования методом send(): асинхронный GET-запрос на url
@@ -434,6 +438,7 @@ function loadMenu() {
         },
         error => {
             console.error(error);
+            $('<div>').text('Ошибка удаления контейнера').dialog({title:'Ошибка удаления'});
         });
 }
 /** Создает элементы управления галереей */
@@ -455,6 +460,7 @@ function loadGallery() {
             },
             error => {
                 console.error(error);
+                $('<div>').text(error.status + ' ' + error.statusText).dialog({title:'Ошибка связи'});
             });
     }
 }
@@ -770,10 +776,12 @@ function loadCatalog() {
             catch (e) {
                 // выводим сообщение об ошибке
                 console.error(e.message);
+                $('<div>').text(e.status + ' ' + e.statusText).dialog({title:'Ошибка связи'});
             }
         },
         error: error => {
             console.error(error);
+            $('<div>').text(error.status + ' ' + error.statusText).dialog({title:'Ошибка связи'});
         }
     });
 }
@@ -822,10 +830,12 @@ function userAuthorization() {
             catch (e) {
                 // выводим сообщение об ошибке
                 console.error(e.message);
+                $('<div>').text(e.status + ' ' + e.responseJSON.message).dialog({title:'Ошибка связи'});
             }
         },
         error: error => {
             console.error(`${error.status} ${error.responseJSON.message}`);
+            $('<div>').text(error.status + ' ' + error.responseJSON.message).dialog({title:'Ошибка связи'});
         }
     });
 }
@@ -876,10 +886,12 @@ function getComments() {
             catch (e) {
                 // выводим сообщение об ошибке
                 console.error(e.message);
+                $('<div>').text(e.status + ' ' + e.statusText).dialog({title:'Ошибка связи'});
             }
         },
         error: error => {
             console.error(`${error.status} ${error.responseJSON.message}`);
+            $('<div>').text(error.status + ' ' + error.responseJSON.message).dialog({title:'Ошибка связи'});
         }
     });
 }
@@ -929,10 +941,12 @@ function onClickDeleteComment(commentID, commentNumber) {
             catch (e) {
                 // выводим сообщение об ошибке
                 console.error(e.message);
+                $('<div>').text(e.status + ' ' + e.responseJSON.message).dialog({title:'Ошибка связи'});
             }
         },
         error: error => {
             console.error(`${error.status} ${error.responseJSON.message}`);
+            $('<div>').text(error.status + ' ' + error.responseJSON.message).dialog({title:'Ошибка связи'});
         }
     });
 }
@@ -959,10 +973,12 @@ function onClickLikeComment(commentID, commentNumber) {
             catch (e) {
                 // выводим сообщение об ошибке
                 console.error(e.message);
+                $('<div>').text(e.status + ' ' + e.responseJSON.message).dialog({title:'Ошибка связи'});
             }
         },
         error: error => {
             console.error(`${error.status} ${error.responseJSON.message}`);
+            $('<div>').text(error.status + ' ' + error.responseJSON.message).dialog({title:'Ошибка связи'});
         }
     });
 }
@@ -989,10 +1005,12 @@ function sendNewComment(comment) {
             catch (e) {
                 // выводим сообщение об ошибке
                 console.error(e.message);
+                $('<div>').text(e.status + ' ' + e.responseJSON.message).dialog({title:'Ошибка связи'});
             }
         },
         error: error => {
             console.error(`${error.status} ${error.responseJSON.message}`);
+            $('<div>').text(error.status + ' ' + error.responseJSON.message).dialog({title:'Ошибка связи'});
         }
     });
 }
@@ -1036,10 +1054,12 @@ function getBasket(consumerID) {
             catch (e) {
                 // выводим сообщение об ошибке
                 console.error(e.message);
+                $('<div>').text(e.status + ' ' + e.responseJSON.message).dialog({title:'Ошибка связи'});
             }
         },
         error: error => {
             console.error(`${error.status} ${error.responseJSON.message}`);
+            $('<div>').text(error.status + ' ' + error.responseJSON.message).dialog({title:'Ошибка связи'});
         }
     });
 }
@@ -1088,10 +1108,12 @@ function onClickAddItemToBasket(item, price) {
             catch (e) {
                 // выводим сообщение об ошибке
                 console.error(e.message);
+                $('<div>').text(e.status + ' ' + e.responseJSON.messag).dialog({title:'Ошибка связи'});
             }
         },
         error: error => {
             console.error(`${error.status} ${error.responseJSON.message}`);
+            $('<div>').text(error.status + ' ' + error.responseJSON.messag).dialog({title:'Ошибка связи'});
         }
     });
 }
@@ -1112,10 +1134,12 @@ function onClickDeleteItemFromBasket(productID) {
             catch (e) {
                 // выводим сообщение об ошибке
                 console.error(e.message);
+                $('<div>').text(e.status + ' ' + e.responseJSON.message).dialog({title:'Ошибка связи'});
             }
         },
         error: error => {
             console.error(`${error.status} ${error.responseJSON.message}`);
+            $('<div>').text(error.status + ' ' + error.responseJSON.message).dialog({title:'Ошибка связи'});
         }
     });
 }
