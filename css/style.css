@@ -11,6 +11,22 @@
 #menu ul {
     list-style: none;
 }
+.popular_goods {
+    padding: 5px;
+}
+.carousel {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+#prev {
+    margin-left: 35px;
+}
+.carousel li {
+    float: left;
+    width: 120px;
+    height: 90px;
+}
 .slide {
     color: #998675;
 }
