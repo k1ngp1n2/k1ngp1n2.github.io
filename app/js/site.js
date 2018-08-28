@@ -1,11 +1,13 @@
 // Адрес сервера
-const SERVER_URL = 'http://89.108.65.123:8080';
+const SERVER_URL = "http://89.108.65.123:8080";
 // id пользователя
-let userID = '';
+let userID = "";
 // Авторизуем пользователя
 userAuthorization();
 // Устанавливаем флаг необходимости загрузки списка населенных пунктов при первом открытии страницы с формой обратной связи
 let citiesLoaded = false;
+// Номер последнего отображенного отзыва
+let lastCommentNumber = 0;
 /** Абстрактный элемент страницы (суперкласс) */
 function Container() {
     this.id = "";
@@ -21,16 +23,18 @@ Container.prototype.render = function() {
 Container.prototype.remove = function() {
     try {
         // бросаем исключение, если объект не имеет id
-        if (this.id === "") throw new Error(`Удаление элемента класса ${this.className} невозможно, т.к. элементу не присвоен id`);
+        if (this.id === "") {
+            throw new Error(`Удаление элемента класса ${this.className} невозможно, т.к. элементу не присвоен id`);
+        }
         // удаляем объект
-        $('#' + this.id).remove();
+        $("#" + this.id).remove();
     }
     catch (e) {
         // выводим сообщение об ошибке
         console.error(e.message);
-        $('<div>').text(e.message).dialog({title:'Ошибка удаления контейнера'});
+        $("<div>").text(e.message).dialog({title:"Ошибка удаления контейнера"});
     }
-};
+}
 /** Класс Меню (подкласс класса Container)
  * @param my_id {String} id меню
  * @param my_class {String} класс меню
@@ -225,10 +229,10 @@ FormField.prototype.render = function() {
     createField.id = this.id;
     createField.setAttribute("type", "text");
     createField.setAttribute("name", this.fieldName);
-    let createLabel = document.createElement('label');
+    let createLabel = document.createElement("label");
     createLabel.setAttribute("for", this.id);
     createLabel.innerHTML = this.labelText;
-    let createP = document.createElement('p');
+    let createP = document.createElement("p");
     createP.innerHTML = createField.outerHTML + createLabel.outerHTML;
     return createP.outerHTML;
 };
@@ -273,13 +277,13 @@ FormSelect.prototype.constructor = FormSelect;
  * @return {String} html-код для встраивания в страницу
  * @override */
 FormSelect.prototype.render = function() {
-    let createSelect = document.createElement('select');
+    let createSelect = document.createElement("select");
     createSelect.id = this.id;
     let option = $("<option></option>");
-    option.attr('value', '');
-    option.attr('disabled', 'disabled');
-    option.attr('selected', 'selected');
-    option.text('--------- Укажите Ваш населенный пункт ---------');
+    option.attr("value", "");
+    option.attr("disabled", "disabled");
+    option.attr("selected", "selected");
+    option.text("--------- Укажите Ваш населенный пункт ---------");
     createSelect.append(option[0]);
     return createSelect.outerHTML;
 };
@@ -289,16 +293,16 @@ function loadCities(select) {
     let option;
     // Загружаем список городов
     $.ajax({
-        url: 'help/cities.json',
-        dataType: 'json',
+        url: "help/cities.json",
+        dataType: "json",
         success: (data, testStatus) => {
             try {
                 // Бросаем исключение, если загрузка не удалась
-                if (testStatus != 'success') throw new Error('Список городов с сервера не получен из-за ошибки связи');
+                if (testStatus != "success") throw new Error("Список городов с сервера не получен из-за ошибки связи");
                 // Добавляем названия населенных пунктов в поле селект формы
                 $.each(data, (i, val) => {
                     option = $("<option></option>");
-                    option.attr('value', `${val.name} ${val.subject}`);
+                    option.attr("value", `${val.name} ${val.subject}`);
                     option.text(`${val.name} ${val.subject}`);
                     select.append(option[0]);
                 });
@@ -306,12 +310,12 @@ function loadCities(select) {
             catch (e) {
                 // выводим сообщение об ошибке
                 console.error(e.message);
-                $('<div>').text(e.status + ' ' + e.statusText).dialog({title:'Ошибка связи'});
+                $("<div>").text(e.status + " " + e.statusText).dialog({title:"Ошибка связи"});
             }
         },
         error: error => {
-            console.error(error.status + ' ' + error.statusText);
-            $('<div>').text(error.status + ' ' + error.statusText).dialog({title:'Ошибка связи'});
+            console.error(error.status + " " + error.statusText);
+            $("<div>").text(error.status + " " + error.statusText).dialog({title:"Ошибка связи"});
         }
     });
 }
@@ -376,11 +380,11 @@ function httpGet(url) {
         };
         // Создаем обработчик события неудачного завершения запроса
         xhr.onerror = function() {
-            $('<div>').text('Сетевая ошибка').dialog({title:'Ошибка связи'});
+            $("<div>").text("Сетевая ошибка").dialog({title:"Ошибка связи"});
             reject(new Error("Сетевая ошибка"));
         };
         // Инициализируем объект XMLHttpRequest и сохраняем аргументы для последующего использования методом send(): асинхронный GET-запрос на url
-        xhr.open('GET', url);
+        xhr.open("GET", url);
         // Открываем соединение и отсылаем запрос на сервер
         xhr.send();
     });
@@ -392,7 +396,7 @@ function loadMenu() {
     * элементы меню задаются двумя значениями - адрес для перехода и название пункта
     * change_to_lvlN - команда перехода на другой уровень вложенности меню, где N - уровень, на который переходим
     * create_lvlN - команда создания пункта меню уровня N, содержащего вложенное меню */
-    httpGet('menu.json').then( result => {
+    httpGet("menu.json").then( result => {
             // Преобразуем тело ответа в объект
             const allItems = JSON.parse(result);
             // Используем полученные данные для создания меню
@@ -400,7 +404,7 @@ function loadMenu() {
             // Текущий уровень элементов меню (0 - главное меню)
             let lvl = 0;
             // Массивы для хранения пунктов меню для соответствующих уровней глубины вложенности меню
-            lvls = [];
+            let lvls = [];
             for (let i = 0; i < allItems[0]; i++) {
                 lvls[i] = [];
             }
@@ -434,11 +438,11 @@ function loadMenu() {
             // Создаем главное меню
             let menu = new Menu("menu-id", "menu-class", lvls[0]);
             // Визуализируем меню на странице сайта
-            document.getElementById('menu').innerHTML = menu.render();
+            document.getElementById("menu").innerHTML = menu.render();
         },
         error => {
             console.error(error);
-            $('<div>').text('Ошибка удаления контейнера').dialog({title:'Ошибка удаления'});
+            $("<div>").text("Ошибка удаления контейнера").dialog({title:"Ошибка удаления"});
         });
 }
 /** Создает элементы управления галереей */
@@ -460,36 +464,44 @@ function loadGallery() {
             },
             error => {
                 console.error(error);
-                $('<div>').text(error.status + ' ' + error.statusText).dialog({title:'Ошибка связи'});
+                $("<div>").text(error.status + " " + error.statusText).dialog({title:"Ошибка связи"});
             });
     }
 }
 /** Обработчик нажатий клавиш фильтрации фотографий по тегу */
 function tagFilter(){
     /** Обработчик нажатий клавиш фильтрации фотографий по тегу */
-    $('.tag_filter').click(function(){
-        if ($(this).hasClass('active')){
+    $(".tag_filter").click(function(){
+        if ($(this).hasClass("active")){
             return;
         }
-        $('.tag_filter.active').button('toggle');
-        $(this).button('toggle');
-        if ($(this).text() === 'Все'){
-            $('.card').show(300);
+        $(".tag_filter.active").button("toggle");
+        $(this).button("toggle");
+        if ($(this).text() === "Все"){
+            $(".card").show(300);
         } else {
-            $('.card').hide().filter('[data-key="'+$(this).text()+'"]').show(300);
+            $(".card").hide().filter(`[data-key="${$(this).text()}"]`).show(300);
         }
     });
 }
 /** Обрабатывает по правилам русского языка кавычки в тексте с диалогами, заключенными в апострофы, со словами на русском и английском языках */
 function regExpOutput() {
-    let edittingText = `Анна сказала: 'Этим летом я буду отдыхать в Кот-д'Ивуар!'\n
-        Учитель неожиданно заметил: 'Время истекло'.\n
-        'Прямая речь'\n
-        'Поезд ушёл, — с грустью подумала девушка, — теперь уж точно опоздаю!'\n
-        'Что ж, поезд успел уйти, — с грустью подумал студент. – Теперь я точно не успею в институт!'.\n
-        Мужчина с грустью подумал: 'Электричка ушла, теперь я точно опоздаю', — и быстро побежал на автобусную остановку.\n
-        'Hello, friend!'\n
-        'test'\n
+    let edittingText = `Анна сказала: 'Этим летом я буду отдыхать в Кот-д'Ивуар!'
+
+        Учитель неожиданно заметил: 'Время истекло'.
+
+        'Прямая речь'
+
+        'Поезд ушёл, — с грустью подумала девушка, — теперь уж точно опоздаю!'
+
+        'Что ж, поезд успел уйти, — с грустью подумал студент. – Теперь я точно не успею в институт!'.
+
+        Мужчина с грустью подумал: 'Электричка ушла, теперь я точно опоздаю', — и быстро побежал на автобусную остановку.
+
+        'Hello, friend!'
+
+        'test'
+
         Test parents' aren't 'test test`;
     let newEl = document.createElement("p");
     newEl.innerHTML = edittingText;
@@ -513,16 +525,16 @@ function regExpOutput() {
 }
 /** Создает форму обратной связи */
 function createForm() {
-    $("#call_back").append(new FormField('input', 'form_name', 'name', 'Имя').render());
-    $("#call_back").append(new FormField('input', 'form_birthday', 'birthday', 'Дата рождения').render());
-    $("#call_back").append(new FormField('input', 'form_phone', 'phone', 'Телефон').render());
-    $("#call_back").append(new FormField('input', 'form_email', 'email', 'e-mail').render());
-    $("#call_back").append(new FormField('textarea', 'form_text', 'message', 'Сообщение').render());
-    $("#call_back").append(new FormSelect('cities').render());
-    $("#call_back").append(new FormButton('form_submit', 'Отправить', 'checkForm(this.form)').render());
+    $("#call_back").append(new FormField("input", "form_name", "name", "Имя").render());
+    $("#call_back").append(new FormField("input", "form_birthday", "birthday", "Дата рождения").render());
+    $("#call_back").append(new FormField("input", "form_phone", "phone", "Телефон").render());
+    $("#call_back").append(new FormField("input", "form_email", "email", "e-mail").render());
+    $("#call_back").append(new FormField("textarea", "form_text", "message", "Сообщение").render());
+    $("#call_back").append(new FormSelect("cities").render());
+    $("#call_back").append(new FormButton("form_submit", "Отправить", "checkForm(this.form)").render());
     // Убираем labels, если в поле ввода формы введен какой-то текст
     hideLabelsOnBlur();
-    $('#form_birthday').datepicker();
+    $("#form_birthday").datepicker();
 }
 /** Проверяет строку на соответствие шаблону
  * @param str {String} проверяемая строка
@@ -536,10 +548,10 @@ function validForTemplate(str, regexp) {
  * @param errorMessage {String} сообщение об ошибке */
 function showError(container, errorMessage) {
     // Меняем стиль отображения контейнера, отображающего ошибку
-    container.classList.add('error');
+    container.classList.add("error");
     // Создаем элемент для отображения сообщения об ошибке
-    let msgElem = document.createElement('span');
-    msgElem.classList.add('error-message');
+    let msgElem = document.createElement("span");
+    msgElem.classList.add("error-message");
     msgElem.innerHTML = errorMessage;
     // Визуализируем текст сообщения об ошибке
     container.appendChild(msgElem);
@@ -548,7 +560,7 @@ function showError(container, errorMessage) {
  * @param container {Object}, в котором надо удалить сообщение об ошибке */
 function resetError(container) {
     // Меняем стиль отображения контейнера, отображавшего ошибку
-    container.classList.remove('error');
+    container.classList.remove("error");
     if (container.lastChild.className == "error-message") {
         // Удаляем сообщение об ошибке
         container.removeChild(container.lastChild);
@@ -563,152 +575,152 @@ function checkForm(form) {
     // Если поле с именем пользователя заполнено неверно
     if (!validForTemplate(elems.name.value, /^[а-яёА-ЯЁ]+$/)) {
         // то выводим сообщение об ошибке
-        showError(elems.name.parentNode, 'Имя может состоять только из русских букв');
+        showError(elems.name.parentNode, "Имя может состоять только из русских букв");
     }
     // Обработка поля с телефоном пользователя
     resetError(elems.phone.parentNode);
     if (!validForTemplate(elems.phone.value, /^\+\d\(\d{3}\)\d{3}-\d{4}$/)) {
-        showError(elems.phone.parentNode, 'Введите номер телефона в формате +7(000)000-0000');
+        showError(elems.phone.parentNode, "Введите номер телефона в формате +7(000)000-0000");
     }
     // Обработка поля с почтовым адресом пользователя
     resetError(elems.email.parentNode);
     if (!validForTemplate(elems.email.value, /^(\w+)((\.\w+)|(-\w+))?(@[a-z_]+\.[a-z]{2,6})$/)) {
-        showError(elems.email.parentNode, 'Недопустимый адрес электронной почты');
+        showError(elems.email.parentNode, "Недопустимый адрес электронной почты");
     }
     // Обработка поля с сообщением пользователя
     resetError(elems.message.parentNode);
     if (validForTemplate(elems.message.value, /^$/)) {
-        showError(elems.message.parentNode, 'Оставьте ваше сообщение');
+        showError(elems.message.parentNode, "Оставьте ваше сообщение");
     }
-    $('.error-message').effect("slide", 3000);
+    $(".error-message").effect("slide", 3000);
 }
 /** Убирает labels, если в поле ввода формы введены символы */
 function hideLabelsOnBlur() {
     // Обработчик события потери фокуса на поле form_name
     form_name.onblur = () => {
         // если в поле имеются символы
-        if (form_name.value !== '')
+        if (form_name.value !== "")
             // то скрываем label
-            document.forms.callback.name.parentNode.getElementsByTagName('label')[0].style.display = 'none';
+            document.forms.callback.name.parentNode.getElementsByTagName("label")[0].style.display = "none";
         else
             // иначе отображаем label
-            document.forms.callback.name.parentNode.getElementsByTagName('label')[0].style.display = '';
+            document.forms.callback.name.parentNode.getElementsByTagName("label")[0].style.display = "";
     };
     // Обработчик события потери фокуса на поле form_birthday
     form_birthday.onblur = () => {
-        $('#form_birthday + label')[0].style.top = '8.5em';
+        $("#form_birthday + label")[0].style.top = "8.5em";
     };
     // Обработчик события потери фокуса на поле form_phone
     form_phone.onblur = () => {
-        if (form_phone.value !== '')
-            document.forms.callback.phone.parentNode.getElementsByTagName('label')[0].style.display = 'none';
+        if (form_phone.value !== "")
+            document.forms.callback.phone.parentNode.getElementsByTagName("label")[0].style.display = "none";
         else
-            document.forms.callback.phone.parentNode.getElementsByTagName('label')[0].style.display = '';
+            document.forms.callback.phone.parentNode.getElementsByTagName("label")[0].style.display = "";
     };
     // Обработчик события потери фокуса на поле form_email
     form_email.onblur = () => {
-        if (form_email.value !== '')
-            document.forms.callback.email.parentNode.getElementsByTagName('label')[0].style.display = 'none';
+        if (form_email.value !== "")
+            document.forms.callback.email.parentNode.getElementsByTagName("label")[0].style.display = "none";
         else
-            document.forms.callback.email.parentNode.getElementsByTagName('label')[0].style.display = '';
+            document.forms.callback.email.parentNode.getElementsByTagName("label")[0].style.display = "";
     };
     // Обработчик события потери фокуса на поле form_text
     form_text.onblur = () => {
-        if (form_text.value !== '')
-            document.forms.callback.message.parentNode.getElementsByTagName('label')[0].style.display = 'none';
+        if (form_text.value !== "")
+            document.forms.callback.message.parentNode.getElementsByTagName("label")[0].style.display = "none";
         else
-            document.forms.callback.message.parentNode.getElementsByTagName('label')[0].style.display = '';
+            document.forms.callback.message.parentNode.getElementsByTagName("label")[0].style.display = "";
     };
 }
 /** Включает отображение раздела о компании */
 function showCompanyInfo() {
-    if (document.querySelector('#company').style.display === '') {
+    if (document.querySelector("#company").style.display === "") {
         // Создаем страницу с отзывами
         createCommentPage();
-        document.querySelector('#cart').style.display = '';
-        document.querySelector('#catalog').style.display = '';
-        document.querySelector('#photo_gallery').style.display = '';
-        document.querySelector('#tabs').style.display = '';
-        document.querySelector('#reg_exp').style.display = '';
-        document.querySelector('#company').style.display = 'block';
-        document.querySelector('#call_back').style.display = '';
+        document.querySelector("#cart").style.display = "";
+        document.querySelector("#catalog").style.display = "";
+        document.querySelector("#photo_gallery").style.display = "";
+        document.querySelector("#tabs").style.display = "";
+        document.querySelector("#reg_exp").style.display = "";
+        document.querySelector("#company").style.display = "block";
+        document.querySelector("#call_back").style.display = "";
     }
 }
 /** Включает отображение корзины */
 function onClickShowBasket() {
-    if (document.querySelector('#cart').style.display === '') {
+    if (document.querySelector("#cart").style.display === "") {
         // Получаем содержимое корзины с сервера
         getBasket(userID);
-        document.querySelector('#cart').style.display = 'block';
-        document.querySelector('#catalog').style.display = '';
-        document.querySelector('#photo_gallery').style.display = '';
-        document.querySelector('#tabs').style.display = '';
-        document.querySelector('#reg_exp').style.display = '';
-        document.querySelector('#company').style.display = '';
-        document.querySelector('#call_back').style.display = '';
+        document.querySelector("#cart").style.display = "block";
+        document.querySelector("#catalog").style.display = "";
+        document.querySelector("#photo_gallery").style.display = "";
+        document.querySelector("#tabs").style.display = "";
+        document.querySelector("#reg_exp").style.display = "";
+        document.querySelector("#company").style.display = "";
+        document.querySelector("#call_back").style.display = "";
     }
 }
 /** Включает отображение раздела каталог */
 function showCatalog() {
-    if (document.querySelector('#catalog').style.display === '') {
-        document.querySelector('#cart').style.display = '';
-        document.querySelector('#catalog').style.display = 'block';
-        document.querySelector('#photo_gallery').style.display = '';
-        document.querySelector('#tabs').style.display = '';
-        document.querySelector('#reg_exp').style.display = '';
-        document.querySelector('#company').style.display = '';
-        document.querySelector('#call_back').style.display = '';
+    if (document.querySelector("#catalog").style.display === "") {
+        document.querySelector("#cart").style.display = "";
+        document.querySelector("#catalog").style.display = "block";
+        document.querySelector("#photo_gallery").style.display = "";
+        document.querySelector("#tabs").style.display = "";
+        document.querySelector("#reg_exp").style.display = "";
+        document.querySelector("#company").style.display = "";
+        document.querySelector("#call_back").style.display = "";
     }
 }
 /** Включает отображение раздела фотогалереи */
 function showGallery() {
-    if (document.querySelector('#photo_gallery').style.display === '') {
-        document.querySelector('#cart').style.display = '';
-        document.querySelector('#catalog').style.display = '';
-        document.querySelector('#photo_gallery').style.display = 'block';
-        document.querySelector('#tabs').style.display = '';
-        document.querySelector('#reg_exp').style.display = '';
-        document.querySelector('#company').style.display = '';
-        document.querySelector('#call_back').style.display = '';
+    if (document.querySelector("#photo_gallery").style.display === "") {
+        document.querySelector("#cart").style.display = "";
+        document.querySelector("#catalog").style.display = "";
+        document.querySelector("#photo_gallery").style.display = "block";
+        document.querySelector("#tabs").style.display = "";
+        document.querySelector("#reg_exp").style.display = "";
+        document.querySelector("#company").style.display = "";
+        document.querySelector("#call_back").style.display = "";
     }
 }
 /** Включает отображение раздела промоакций */
 function showPromo() {
-    if (document.querySelector('#tabs').style.display === '') {
-        document.querySelector('#cart').style.display = '';
-        document.querySelector('#catalog').style.display = '';
-        document.querySelector('#photo_gallery').style.display = '';
-        document.querySelector('#tabs').style.display = 'block';
-        document.querySelector('#reg_exp').style.display = '';
-        document.querySelector('#company').style.display = '';
-        document.querySelector('#call_back').style.display = '';
+    if (document.querySelector("#tabs").style.display === "") {
+        document.querySelector("#cart").style.display = "";
+        document.querySelector("#catalog").style.display = "";
+        document.querySelector("#photo_gallery").style.display = "";
+        document.querySelector("#tabs").style.display = "block";
+        document.querySelector("#reg_exp").style.display = "";
+        document.querySelector("#company").style.display = "";
+        document.querySelector("#call_back").style.display = "";
     }
 }
 /** Включает отображение раздела новостей */
 function showNews() {
-    if (document.querySelector('#reg_exp').style.display === '') {
-        document.querySelector('#cart').style.display = '';
-        document.querySelector('#catalog').style.display = '';
-        document.querySelector('#tabs').style.display = '';
-        document.querySelector('#photo_gallery').style.display = '';
-        document.querySelector('#reg_exp').style.display = 'block';
-        document.querySelector('#company').style.display = '';
-        document.querySelector('#call_back').style.display = '';
+    if (document.querySelector("#reg_exp").style.display === "") {
+        document.querySelector("#cart").style.display = "";
+        document.querySelector("#catalog").style.display = "";
+        document.querySelector("#tabs").style.display = "";
+        document.querySelector("#photo_gallery").style.display = "";
+        document.querySelector("#reg_exp").style.display = "block";
+        document.querySelector("#company").style.display = "";
+        document.querySelector("#call_back").style.display = "";
     }
 }
 /** Включает отображение раздела помощи */
 function showHelp() {
-    if (document.querySelector('#call_back').style.display === '') {
-        document.querySelector('#cart').style.display = '';
-        document.querySelector('#catalog').style.display = '';
-        document.querySelector('#tabs').style.display = '';
-        document.querySelector('#photo_gallery').style.display = '';
-        document.querySelector('#reg_exp').style.display = '';
-        document.querySelector('#company').style.display = '';
-        document.querySelector('#call_back').style.display = 'block';
+    if (document.querySelector("#call_back").style.display === "") {
+        document.querySelector("#cart").style.display = "";
+        document.querySelector("#catalog").style.display = "";
+        document.querySelector("#tabs").style.display = "";
+        document.querySelector("#photo_gallery").style.display = "";
+        document.querySelector("#reg_exp").style.display = "";
+        document.querySelector("#company").style.display = "";
+        document.querySelector("#call_back").style.display = "block";
         if (!citiesLoaded) {
             // Подгружаем наименования населенных пунктов в поле селект формы обратной связи
-            loadCities($('#cities')[0]);
+            loadCities($("#cities")[0]);
             // Список населенных пунктов загружен
             citiesLoaded = true;
         }
@@ -717,28 +729,28 @@ function showHelp() {
 /** Предоставляет управление вкладками */
 function tabControls() {
     // По умолчанию открываем первую вкладку
-    $('.tab_controls li:first').addClass('opened_tab');
+    $(".tab_controls li:first").addClass("opened_tab");
     // Отображаем первый div
-    $('.tabs div:first').addClass('opened');
+    $(".tabs div:first").addClass("opened");
     // Остальные div соответствуют другим вкладкам - скрываем их
-    $('.tabs div:not(:first)').hide();
+    $(".tabs div:not(:first)").hide();
     // Добавляем обработчик щелчков по вкладкам
     // Если щелчок по закрытой вкладке
-    $('ul.tab_controls').on('click', 'li:not(.opened_tab)', function() {
+    $("ul.tab_controls").on("click", "li:not(.opened_tab)", function() {
         // то применяем к ней класс opened_tab
-        $(this).addClass('opened_tab')
+        $(this).addClass("opened_tab")
             // у остальных вкладок удаляем этот класс
-            .siblings().removeClass('opened_tab')
+            .siblings().removeClass("opened_tab")
             // удаляем класс opened у всех div вкладок
-            .closest('div.tabs').find('div.tab_info').removeClass('opened').hide()
+            .closest("div.tabs").find("div.tab_info").removeClass("opened").hide()
             // применяем класс opened к div, имеющим тот же порядковый номер, что и вкладка
-            .eq($(this).index()).addClass('opened').show();
+            .eq($(this).index()).addClass("opened").show();
     });
 }
 /** Управляет визуализацией подсказки */
 function btn_slide() {
-    $('#helper').slideToggle('slow');
-    $('p .slide').toggleClass('active');
+    $("#helper").slideToggle("slow");
+    $("p .slide").toggleClass("active");
 }
 /** Создает фотогалерею */
 function createGallery() {
@@ -758,18 +770,18 @@ function pageTemplate() {
     // Отображаем карусель
     createCarousel();
     // Скрываем подсказку вверху страницы
-    $('#helper').hide();
+    $("#helper").hide();
 }
 /** Загружает названия и цены автомобилей */
 function loadCatalog() {
     // Загружаем описания автомобилей
     $.ajax({
-        url: 'catalogue/autoDetails.json',
-        dataType: 'json',
+        url: "catalogue/autoDetails.json",
+        dataType: "json",
         success: (data, testStatus) => {
             try {
                 // Бросаем исключение, если загрузка не удалась
-                if (testStatus != 'success') throw new Error('Сведения об автомобилях с сервера не получены из-за ошибки связи');
+                if (testStatus != "success") throw new Error("Сведения об автомобилях с сервера не получены из-за ошибки связи");
                 // Добавляем названия автомобилей в поле селект формы
                 addAutomobiles(data);
                 // Добавляем обработчик щелчков по товарам в списке каталога
@@ -778,7 +790,7 @@ function loadCatalog() {
             catch (e) {
                 // выводим сообщение об ошибке
                 console.error(e.message);
-                $('<div>').text(e.status + ' ' + e.statusText).dialog({title:'Ошибка связи'});
+                $("<div>").text(e.status + " " + e.statusText).dialog({title:"Ошибка связи"});
             }
         },
         error: error => {
@@ -843,14 +855,12 @@ function userAuthorization() {
 }
 /** Создает страницу с отзывами о магазине */
 function createCommentPage() {
-    // Номер последнего отображенного отзыва
-    let lastCommentNumber;
     // Добавляем форму для отправки отзывов
     createCommentForm();
-    // Добавлем обработчик отправки отзывов на сервер
-    onClickSubmitNewComment();
     // Получаем все отзывы с сервера
     getComments();
+    // Добавлем обработчик отправки отзывов на сервер
+    onClickSubmitNewComment();
 }
 /** Добавляет форму для отправки отзыва */
 function createCommentForm() {
@@ -1061,7 +1071,7 @@ function getBasket(consumerID) {
         },
         error: error => {
             console.error(`${error.status} ${error.responseJSON.message}`);
-            $('<div>').text(error.status + ' ' + error.responseJSON.message).dialog({title:'Ошибка связи'});
+            $("<div>").text(error.status + " " + error.responseJSON.message).dialog({title:"Ошибка связи"});
         }
     });
 }
@@ -1069,7 +1079,7 @@ function getBasket(consumerID) {
  * @param basketData {Object} json-данные содержимого корзины */
 function showBasket(basketData) {
     if (basketData.cart.length == 0) {
-        $('#cart').text('Товары в корзине отсутствуют. Перейдите в каталог сайта, чтобы выбрать нужные Вам товары');
+        $("#cart").text("Товары в корзине отсутствуют. Перейдите в каталог сайта, чтобы выбрать нужные Вам товары");
     } else {
         let basket = `<p>Имя покупателя: ${basketData.user_id}</p><p>Состав корзины:</p>`;
         // Общая стоимость товаров в корзине
@@ -1083,7 +1093,7 @@ function showBasket(basketData) {
         // Визуализируем общую стоимость товаров в корзине
         basket += `<p>Общая стоимость товаров в корзине: ${value} рублей.</p>`;
         // Визуализируем содержимое корзины на странице
-        $('#cart').html(basket);
+        $("#cart").html(basket);
         // Добавляем кнопки удаления товара из корзины для каждого товара в корзине
         for (let i = 0; i < basketData.cart.length; i++) {
             $(`#item${i}`).click(basketData.cart[i], (eventObject) => {
@@ -1100,22 +1110,22 @@ function showBasket(basketData) {
 function onClickAddItemToBasket(item, price) {
     $.ajax({
         url: `${SERVER_URL}/shop?user_id=${userID}&product=${item}&price=${price}`,
-        type: 'post',
-        dataType: 'json',
+        type: "post",
+        dataType: "json",
         success: (data, testStatus) => {
             try {
                 // Бросаем исключение, если загрузка не удалась
-                if (testStatus != 'success') throw new Error('Товар в корзину не добавлен из-за ошибки связи');
+                if (testStatus != "success") throw new Error("Товар в корзину не добавлен из-за ошибки связи");
             }
             catch (e) {
                 // выводим сообщение об ошибке
                 console.error(e.message);
-                $('<div>').text(e.status + ' ' + e.responseJSON.messag).dialog({title:'Ошибка связи'});
+                $("<div>").text(e.status + " " + e.responseJSON.messag).dialog({title:"Ошибка связи"});
             }
         },
         error: error => {
             console.error(`${error.status} ${error.responseJSON.message}`);
-            $('<div>').text(error.status + ' ' + error.responseJSON.messag).dialog({title:'Ошибка связи'});
+            $("<div>").text(error.status + " " + error.responseJSON.messag).dialog({title:"Ошибка связи"});
         }
     });
 }
@@ -1124,24 +1134,24 @@ function onClickAddItemToBasket(item, price) {
 function onClickDeleteItemFromBasket(productID) {
     $.ajax({
         url: `${SERVER_URL}/shop?user_id=${userID}&product_id=${productID}`,
-        type: 'delete',
-        dataType: 'json',
+        type: "delete",
+        dataType: "json",
         success: (data, testStatus) => {
             try {
                 // Бросаем исключение, если загрузка не удалась
-                if (testStatus != 'success') throw new Error('Товар из корзины не удален из-за ошибки связи');
+                if (testStatus != "success") throw new Error("Товар из корзины не удален из-за ошибки связи");
                 // Обтображаем содержимое корзины после удаления товара
                 showBasket(data);
             }
             catch (e) {
                 // выводим сообщение об ошибке
                 console.error(e.message);
-                $('<div>').text(e.status + ' ' + e.responseJSON.message).dialog({title:'Ошибка связи'});
+                $("<div>").text(e.status + " " + e.responseJSON.message).dialog({title:"Ошибка связи"});
             }
         },
         error: error => {
             console.error(`${error.status} ${error.responseJSON.message}`);
-            $('<div>').text(error.status + ' ' + error.responseJSON.message).dialog({title:'Ошибка связи'});
+            $("<div>").text(error.status + " " + error.responseJSON.message).dialog({title:"Ошибка связи"});
         }
     });
 }
@@ -1169,7 +1179,7 @@ function onClickDeleteItemFromBasket(productID) {
                 $.extend(settings, options);
             }
             let $this = $(this);//родительский элемент (Блок в котором находится карусель)
-            let $carousel = $this.children(':first');// получаем дочерний элемент (UL) т.е. саму карусель
+            let $carousel = $this.children(":first");// получаем дочерний элемент (UL) т.е. саму карусель
             let itemWidth = $carousel.children().outerWidth()+settings.margin; // вычисляем ширину элемента
             let itemHeight = $carousel.children().outerHeight()+settings.margin;// вычисляем высоту элемента
             let itemsTotal = $carousel.children().length; // получаем общее количество элементов в каруселе
@@ -1181,46 +1191,46 @@ function onClickDeleteItemFromBasket(productID) {
             //Если карусель вертикальная то
             if(settings.position=="v")
                 $this.css({
-                    'position': 'relative', // необходимо для нормального отображения в IE6-7
-                    'overflow': 'hidden', // прячем все, что не влезает в контейнер
-                    'height': settings.visible * size + 'px' ,// ставим длину контейнера равной ширине всех видимых элементов
-                    'width': itemWidth-settings.margin // ширина контейнера равна ширине элемента
+                    "position": "relative", // необходимо для нормального отображения в IE6-7
+                    "overflow": "hidden", // прячем все, что не влезает в контейнер
+                    "height": settings.visible * size + "px" ,// ставим длину контейнера равной ширине всех видимых элементов
+                    "width": itemWidth-settings.margin // ширина контейнера равна ширине элемента
                 });
             else
                 $this.css({
-                    'position': 'relative', // необходимо для нормального отображения в IE6-7
-                    'overflow': 'hidden', // прячем все, что не влезает в контейнер
-                    'width': settings.visible * size + 'px' ,// ширину контейнера ставим равной ширине всех видимых элементов
-                    'height': itemHeight-settings.margin
+                    "position": "relative", // необходимо для нормального отображения в IE6-7
+                    "overflow": "hidden", // прячем все, что не влезает в контейнер
+                    "width": settings.visible * size + "px" ,// ширину контейнера ставим равной ширине всех видимых элементов
+                    "height": itemHeight-settings.margin
                 });
             //вычисляем расстояние отступа от каждого элемента
             if(settings.position=="v")
-                $carousel.children('li').css({
-                    'margin-top': settings.margin/2+ 'px',
-                    'margin-bottom': settings.margin/2+ 'px',
-                    'float': 'left',
-                    'width': '60px',
-                    'height': '40px'
+                $carousel.children("li").css({
+                    "margin-top": settings.margin/2+ "px",
+                    "margin-bottom": settings.margin/2+ "px",
+                    "float": "left",
+                    "width": "60px",
+                    "height": "40px"
                 });
             else
-                $carousel.children('li').css({
-                    'margin-left': settings.margin/2+ 'px',
-                    'margin-right': settings.margin/2+ 'px',
+                $carousel.children("li").css({
+                    "margin-left": settings.margin/2+ "px",
+                    "margin-right": settings.margin/2+ "px",
                 });
             // в зависимости от ориентации, увеличиваем длину или ширину карусели
             if(settings.position=="v")
                 $carousel.css({
-                    'position': 'relative', // разрешаем сдвиг по оси
-                    'height': 9999 + 'px', // увеличиваем длину карусели
-                    'left': 0,
-                    'top': 0
+                    "position": "relative", // разрешаем сдвиг по оси
+                    "height": 9999 + "px", // увеличиваем длину карусели
+                    "left": 0,
+                    "top": 0
                 });
             else
                 $carousel.css({
-                    'position': 'relative', // разрешаем сдвиг по оси
-                    'width': 9999 + 'px', // увеличиваем лену карусели
-                    'top': 0,
-                    'left': 0
+                    "position": "relative", // разрешаем сдвиг по оси
+                    "width": 9999 + "px", // увеличиваем лену карусели
+                    "top": 0,
+                    "left": 0
                 });
             // прокрутка карусели в наравлении dir [true-вперед; false-назад]
             function slide(dir) {
@@ -1238,21 +1248,23 @@ function onClickDeleteItemFromBasket(productID) {
                           * клоны стольких элементов, сколько задано
                           * в параметре rotateBy (по умолчанию задан один элемент)
                         */
-                        $carousel.children(':last').after($carousel.children().slice(0,settings.rotateBy).clone(true));
+                        $carousel.children(":last").after($carousel.children().slice(0,settings.rotateBy).clone(true));
                     } else { // если мотаем к предыдущему элементу
                         /*
                            * вставляем перед первым элементом карусели
                            * клоны стольких элементов, сколько задано
                            * в параметре rotateBy (по умолчанию задан один элемент)
-                        */                                                $carousel.children(':first').before($carousel.children().slice(itemsTotal - settings.rotateBy, itemsTotal).clone(true));
+                        */
+                        $carousel.children(":first").before($carousel.children().slice(itemsTotal - settings.rotateBy, itemsTotal).clone(true));
                         /*
                          * сдвигаем карусель (<ul>)  на ширину/высоту  элемента,
                          * умноженную на количество элементов, заданных
                          * в параметре rotateBy (по умолчанию задан один элемент)
                         */
                         if(settings.position=="v")
-                            $carousel.css('top', -size * settings.rotateBy + 'px');
-                        else                                                     $carousel.css('left', -size * settings.rotateBy + 'px');
+                            $carousel.css("top", -size * settings.rotateBy + "px");
+                        else
+                            $carousel.css("left", -size * settings.rotateBy + "px");
                     }
 
                     /*
@@ -1260,14 +1272,14 @@ function onClickDeleteItemFromBasket(productID) {
                      * текущее значение  + ширина/высота  одного элемента * количество проматываемых элементов * на направление перемещения (1 или -1)
                       */
                     if(settings.position=="v")
-                        Indent = parseInt($carousel.css('top')) + (size * settings.rotateBy * direction);
+                        Indent = parseInt($carousel.css("top")) + (size * settings.rotateBy * direction);
                     else
-                        Indent = parseInt($carousel.css('left')) + (size * settings.rotateBy * direction);
+                        Indent = parseInt($carousel.css("left")) + (size * settings.rotateBy * direction);
 
                     if(settings.position=="v")
-                        var animate_data={'top': Indent};
+                        var animate_data = {"top": Indent};
                     else
-                        var animate_data={'left': Indent};
+                        var animate_data = {"left": Indent};
                     // запускаем анимацию
                     $carousel.animate(animate_data, {queue: false, duration: settings.speed, complete: function() {
                             // когда анимация закончена
@@ -1275,9 +1287,10 @@ function onClickDeleteItemFromBasket(productID) {
                                 // удаляем столько первых элементов, сколько задано в rotateBy
                                 $carousel.children().slice(0, settings.rotateBy).remove();
                                 // устанавливаем сдвиг в ноль
-                                if(settings.position=="v")
-                                    $carousel.css('top', 0);
-                                else                                                    $carousel.css('left', 0);
+                                if (settings.position == "v")
+                                    $carousel.css("top", 0);
+                                else
+                                    $carousel.css("left", 0);
                             } else { // если мотаем к предыдущему элементу
                                 // удаляем столько последних элементов, сколько задано в rotateBy
                                 $carousel.children().slice(itemsTotal, itemsTotal + settings.rotateBy).remove();
@@ -1309,12 +1322,12 @@ function onClickDeleteItemFromBasket(productID) {
 })(jQuery);
 /** Создает карусель на странице */
 function createCarousel() {
-    $('.popular_goods').Carousel({
+    $(".popular_goods").Carousel({
         visible: 2,
         rotateBy: 1,
         speed: 5000,
-        btnNext: '#next',
-        btnPrev: '#prev',
+        btnNext: "#next",
+        btnPrev: "#prev",
         auto: true,
         backslide: true,
         margin: 5
