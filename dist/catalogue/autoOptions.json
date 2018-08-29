@@ -1,0 +1,6 @@
+<option value="">--- Выберите автомобиль ---</option>
+<option value="0">Aston Martin</option>
+<option value="1">Audi quattro</option>
+<option value="2">Audi R-8</option>
+<option value="3">Ferrari</option>
+<option value="4">Lamborghini</option>

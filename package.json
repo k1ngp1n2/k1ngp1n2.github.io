@@ -5,10 +5,15 @@
   "main": "gulpfile.js",
   "dependencies": {},
   "devDependencies": {
+    "@babel/core": "^7.0.0",
+    "@babel/preset-env": "^7.0.0",
     "browser-sync": "^2.24.7",
     "browserify": "^16.2.2",
     "gulp": "^4.0.0",
+    "gulp-babel": "^8.0.0",
+    "gulp-concat": "^2.6.1",
     "gulp-sass": "^4.0.1",
+    "gulp-sourcemaps": "^2.6.4",
     "gulp-uglify": "^3.0.1",
     "node-static": "^0.7.10"
   },

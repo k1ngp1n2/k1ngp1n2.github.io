@@ -1,0 +1,22 @@
+{
+  "0": {
+    "name": "Aston Martin",
+    "price": 15000000
+  },
+  "1": {
+    "name": "Audi quattro",
+    "price": 8000000
+  },
+  "2": {
+    "name": "Audi R-8",
+    "price": 4000000
+  },
+  "3": {
+    "name": "Ferrari",
+    "price": 20000000
+  },
+  "4": {
+    "name": "Lamborghini",
+    "price": 10000000
+  }
+}

@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1, maximum-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="css/bootstrap.css">
+    <link rel="stylesheet" href="css/jquery-ui.css">
+    <link rel="stylesheet" href="css/style.css">
+    <title>Автосалон</title>
+</head>
+<body class="container">
+    <main>
+        <div class="row">
+            <div class="col pt-5">
+                <div id="menu"></div>
+                <div class="flickr"></div>
+            </div>
+            <div class="col pt-5">
+                <section class="container" id="content_window">
+                    <div class="popular_goods">
+                        <ul class="carousel">
+                            <li><img src="catalogue/popular/1.jpg" alt="Bestseller"></li>
+                            <li><img src="catalogue/popular/2.jpg" alt="Bestseller"></li>
+                            <li><img src="catalogue/popular/3.jpg" alt="Bestseller"></li>
+                            <li><img src="catalogue/popular/4.jpg" alt="Bestseller"></li>
+                            <li><img src="catalogue/popular/5.jpg" alt="Bestseller"></li>
+                            <li><img src="catalogue/popular/6.jpg" alt="Bestseller"></li>
+                        </ul>
+                    </div>
+                    <p><span class="slide" onclick="btn_slide()">Щелкните здесь, чтобы показать или скрыть подсказку</span></p>
+                    <div class="info" id="helper">
+                        <p>Для работы с корзиной щелкните по кнопке "Корзина"</p>
+                        <p>Для помещения товаров в корзину щелкните на пункте меню "Каталог"</p>
+                        <p>Отзывы о нас можно посмотреть, щелкнув на пункте меню "О компании"</p>
+                        <p>Чтобы просмотреть управление вкладками щелкните на пункте меню "Промоакции"</p>
+                        <p>Фотогалерея откроется по щелчку на пункте меню "Галерея"</p>
+                        <p>Замену апострофов можно увидеть, щелкнув на пункте меню "Новости"</p>
+                        <p>Форма обратной связи находится в пункте меню "Помощь"</p>
+                    </div>
+                    <span id="basket" onclick="onClickShowBasket()">Корзина</span>
+                    <div id="cart"></div>
+                    <div id="catalog">
+                        <h3>Выберите интересующий Вас автомобиль</h3>
+                        <form action="#" id="autoCatalog">
+                            <div class="form-group" id="selectionPane">
+                                <label for="autoShooserControl">Выберите автомобиль</label>
+                                <select class="form-control" id="autoShooserControl" name="automobile"></select>
+                            </div>
+                            <input class="btn" type="submit" value="Добавить в корзину">
+                        </form>
+                        <div id="autoDetailPane"></div>
+                    </div>
+                    <div class="tabs" id="tabs">
+                        <p>Промоакции от наших партнеров:</p>
+                        <ul class="tab_controls">
+                            <li>Bosh</li><li>Ford</li><li>Audi</li><li>Ferrari</li>
+                        </ul>
+                        <div class="tab_info">
+                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Esse itaque maxime neque quos similique ullam ut. Architecto dolor dolore dolores ea eum eveniet, facilis fugit hic omnis, perspiciatis quasi repellendus.</p>
+                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad amet aperiam aspernatur eaque enim error, eum ex illo modi nostrum numquam perspiciatis placeat porro quam, quas quibusdam quisquam rem, vero!</p>
+                        </div>
+                        <div class="tab_info">
+                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Adipisci animi aspernatur delectus dolore dolorem, eius incidunt, magni necessitatibus nemo numquam obcaecati officiis pariatur perferendis quaerat quod repudiandae suscipit veritatis voluptas!</p>
+                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aut dolorum eos ex id ipsam nam pariatur quam quas totam voluptate! Alias consequatur pariatur placeat quas sed sit tempora tempore veniam!</p>
+                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusantium adipisci animi architecto consectetur, error facere ipsa iure nostrum odit officiis omnis quasi recusandae reiciendis rem repellendus sapiente sunt unde vitae?</p>
+                        </div>
+                        <div class="tab_info">
+                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Consequuntur laudantium numquam obcaecati praesentium ullam voluptatibus. Ad, earum enim, exercitationem expedita explicabo facilis, fugiat ipsam modi odio recusandae temporibus veniam voluptas?</p>
+                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Adipisci commodi consectetur culpa debitis delectus doloribus ex, itaque laboriosam minus molestias necessitatibus nihil omnis porro provident quaerat sit, vel veritatis voluptatum.</p>
+                        </div>
+                        <div class="tab_info">
+                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aut corporis dolores ducimus est fuga ipsam modi, molestiae mollitia optio, porro quasi veritatis voluptate voluptates. Commodi corporis est nulla pariatur voluptatum!</p>
+                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Animi architecto consectetur debitis delectus dignissimos doloremque id in, inventore iusto, maiores nobis non officia recusandae ullam veritatis, voluptates voluptatum. Quod, voluptatem.</p>
+                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dignissimos, et ipsam nisi quod quos reiciendis unde vero voluptatem. A cumque dicta dolor ex impedit, nisi recusandae ullam. Doloremque, est, reiciendis!</p>
+                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Atque doloremque facilis impedit in molestiae nostrum officia porro sit voluptate voluptates. Aspernatur dolores eum in nostrum praesentium quam, repellendus veniam voluptatibus.</p>
+                        </div>
+                    </div>
+                    <div class="row reg_exp" id="reg_exp"></div>
+                    <form class="py-4" action="#" id="call_back" name="callback"></form>
+                    <div class="row pb-4" id="photo_gallery">
+                        <div class="col text-center gallery_controls"></div>
+                        <div class="card-columns"></div>
+                    </div>
+                    <div id="company"></div>
+                </section>
+            </div>
+        </div>
+    </main>
+    <script src="js/jquery-3.3.1.js"></script>
+    <script src="js/jquery-ui.js"></script>
+    <script src="js/bootstrap.js"></script>
+    <script src="js/site.js"></script>
+</body>
+</html>
