@@ -155,13 +155,11 @@
   width: 25.5em; }
 
 #call_back input {
-  -webkit-box-sizing: border-box;
   box-sizing: border-box;
   border-radius: 2px;
   border: #e5e5e5 1px solid;
   padding-left: 0.5em;
   color: #b4adad;
-  -webkit-transition: all 500ms ease;
   transition: all 500ms ease;
   width: 25.5em; }
 
@@ -261,7 +259,6 @@
   background-color: transparent;
   border-radius: 3px;
   border: solid 1px #ebebeb;
-  -webkit-box-sizing: border-box;
   box-sizing: border-box;
   height: 2em;
   color: #8c8c8c;
@@ -277,11 +274,9 @@
 .gallery_controls .btn:hover {
   background-color: #998675;
   color: #fff;
-  -webkit-transition: all 500ms ease;
   transition: all 500ms ease; }
 
 .gallery_controls .btn:focus {
-  -webkit-box-shadow: none;
   box-shadow: none; }
 
 .gallery_controls .btn:active {
@@ -307,6 +302,6 @@
 @media (min-width: 768px) {
   .card-columns {
     -webkit-column-count: 3;
-    column-count: 3; } }
+            column-count: 3; } }
 
 /*# sourceMappingURL=style.css.map */
