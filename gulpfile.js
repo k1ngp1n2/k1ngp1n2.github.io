@@ -18,6 +18,8 @@ const postcss = require('gulp-postcss');
 const autoprefixer = require('autoprefixer');
 // Уменьшает размер CSS-файла
 const csso = require('gulp-csso');
+// Уменьшает размер HTML-файла
+const htmlmin = require('gulp-htmlmin');
 // Включает поддержку ветвлений в gulp
 const gulpIf = require("gulp-if");
 
@@ -79,6 +81,8 @@ gulp.task("dist", () => {
         .pipe(gulpIf("*.css", csso()))
         // Уменьшаем JS-файл
         .pipe(gulpIf("*.js", uglify()))
+        // Уменьшаем HTML-файл
+        .pipe(gulpIf("*.html", htmlmin({collapseWhitespace: true})))
         .pipe(gulp.dest("dist"));
 });
 // Создает статический сервер с контролем изменений в файлах scss/html
