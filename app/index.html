@@ -9,9 +9,17 @@
     <link rel="stylesheet" href="css/libs/jquery-ui.css">
     <link rel="stylesheet" href="css/style.css">
     <!-- endbuild -->
+    <!-- build:remove -->
+    <link rel="stylesheet" href="css/libs/mocha.css">
+    <!-- endbuild -->
     <title>Автосалон</title>
 </head>
 <body class="container">
+    <!-- build:remove -->
+    <header>
+        <div id="mocha"></div>
+    </header>
+    <!-- endbuild -->
     <main>
         <div class="row">
             <div class="col pt-5">
@@ -94,6 +102,11 @@
     <script src="js/libs/jquery-ui.js"></script>
     <script src="js/libs/bootstrap.js"></script>
     <script src="js/site.js"></script>
+    <!-- endbuild -->
+    <!-- build:remove -->
+    <script src="js/libs/mocha.min.js"></script>
+    <script src="js/libs/chai.min.js"></script>
+    <script src="js/test.js"></script>
     <!-- endbuild -->
 </body>
 </html>
