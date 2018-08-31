@@ -70,7 +70,7 @@ gulp.task("devserver", () => {
     gulp.watch("app/*.html").on("change", refresh);
 });
 // Запускает сервер для разработки
-gulp.task("default", gulp.series("sass", "oldjs", "devserver"));
+gulp.task("dev", gulp.series("sass", "oldjs", "devserver"));
 
 // Создает файлы для публикации на сервере
 gulp.task("dist", () => {

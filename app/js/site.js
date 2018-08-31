@@ -983,7 +983,7 @@ function createCommentForm() {
   // Добавляет форму для отправки отзывов
   $('#company').html("<form id=\"add_new_comment\"><label for=\"new_comment\">\u0427\u0442\u043E \u0412\u044B \u0434\u0443\u043C\u0430\u0435\u0442\u0435 \u043E \u043D\u0430\u0448\u0435\u043C \u043C\u0430\u0433\u0430\u0437\u0438\u043D\u0435?</label><input id=\"new_comment\"><input class=\"btn\" id=\"send_comment\" type=\"submit\" value=\"\u041E\u0442\u043F\u0440\u0430\u0432\u0438\u0442\u044C \u043E\u0442\u0437\u044B\u0432\"></form>");
 }
-/** Добавлет обработчик отправки отзывов на сервер */
+/** Добавляет обработчик отправки отзывов на сервер */
 
 
 function onClickSubmitNewComment() {

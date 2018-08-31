@@ -867,7 +867,7 @@ function createCommentForm() {
     // Добавляет форму для отправки отзывов
     $('#company').html(`<form id="add_new_comment"><label for="new_comment">Что Вы думаете о нашем магазине?</label><input id="new_comment"><input class="btn" id="send_comment" type="submit" value="Отправить отзыв"></form>`);
 }
-/** Добавлет обработчик отправки отзывов на сервер */
+/** Добавляет обработчик отправки отзывов на сервер */
 function onClickSubmitNewComment() {
     let addNewComment = document.querySelector('#add_new_comment');
     let newComment = document.querySelector('#new_comment');
