@@ -8,5 +8,6 @@ describe("Глобальные тесты", () => {
         assert(document.title && document.title.match(/\S/) && document.title !== "Document");
     });
 });
+
 // Запускаем тесты
 mocha.run();
